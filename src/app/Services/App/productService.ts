@@ -14,7 +14,9 @@ const getProducts = async (): Promise<ProductDataType[]> => {
 };
 
 const getProductById = async (id: number | string): Promise<ProductDataType> => {
+  // eslint-disable-next-line no-console
   console.log(id);
+
   return Promise.resolve({
     uuid: 1,
     name: "Simple Wedding Card",
