@@ -26,7 +26,7 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json') }}
   bun-build:
     runs-on: ubuntu-latest
-    environment: release-main
+    environment: production
     env:
       REACT_APP_NAME: ${{ vars.REACT_APP_NAME }}
       REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
