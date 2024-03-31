@@ -67,4 +67,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ env.ENCACAP_BUILD_ARTIFACT_PATH }}
           publish_branch: release/main
-          cname: react-vite-swc-ts.templates.encacap.com
+          cname: book-invitation-fe.encacap.com
