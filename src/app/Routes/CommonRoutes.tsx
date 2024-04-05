@@ -33,7 +33,7 @@ const CommonRoutes = () => {
   }, [dispatch]);
 
   useLayoutEffect(() => {
-    if (user?.id) {
+    if (user?.uuid) {
       setIsLoading(false);
       return;
     }

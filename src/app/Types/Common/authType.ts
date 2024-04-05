@@ -1,8 +1,7 @@
 import { UserDataType } from "./userType";
 
 export interface AuthTokenType {
-  accessToken: string;
-  refreshToken: string;
+  token: string;
 }
 
 export interface AuthLoginFormDataType {
@@ -10,11 +9,11 @@ export interface AuthLoginFormDataType {
   password: string;
 }
 
-export interface AuthRegisterFormDataType extends Pick<UserDataType, "email" | "phone"> {
-  firstName: string;
-  lastName: string;
+export interface AuthRegisterFormDataType extends Pick<UserDataType, "email"> {
+  first_name: string;
+  last_name: string;
   password: string;
-  passwordConfirmation: string;
+  password_confirmation: string;
   isAcceptedTerms: boolean;
 }
 
@@ -24,7 +23,7 @@ export interface AuthForgetPasswordFormDataType {
 
 export interface AuthResetPasswordFormDataType {
   password: string;
-  passwordConfirmation: string;
+  password_confirmation: string;
   otp: string;
 }
 

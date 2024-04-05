@@ -20,7 +20,7 @@ const AdminUserManagement = () => {
   const [selectedUserId, setSelectedUserId] = useState<Key | null>(null);
 
   const selectedUser = useMemo(() => {
-    return userData.find((item) => item.id === selectedUserId) ?? null;
+    return userData.find((item) => item.uuid === selectedUserId) ?? null;
   }, [selectedUserId, userData]);
 
   const handleClickAddButton = useCallback(() => {
@@ -71,7 +71,7 @@ const AdminUserManagement = () => {
         onClickDelete={handleClickDeleteButton}
       />
       <ConfirmationModal
-        title={t("deleteUser", { name: selectedUser?.fullName })}
+        title={t("deleteUser", { name: selectedUser?.name })}
         message='Người dùng "Nguyễn Văn A" sẽ bị xoá khỏi hệ thống. Thao tác này không thể hoàn tác.'
         isOpen={isShowDeleteModal}
         status="danger"

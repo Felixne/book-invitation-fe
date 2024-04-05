@@ -21,9 +21,8 @@ interface AdminUserModificationModalProps extends ModalProps {
 
 const DEFAULT_VALUE: UserFormDataType = {
   email: "",
-  phone: "",
   password: "",
-  fullName: "",
+  name: "",
 };
 
 const AdminUserModificationModal = ({
@@ -77,7 +76,7 @@ const AdminUserModificationModal = ({
     async (formData: UserFormDataType) => {
       if (!user) return;
       try {
-        await onEdit(user.id as number, formData);
+        await onEdit(user.uuid as number, formData);
         toast.success(t("edit"));
         onEdited();
         onClose();
@@ -139,14 +138,7 @@ const AdminUserModificationModal = ({
         type="password"
         autoSave="off"
       />
-      <Input className="block" control={control} disabled={isSubmitting} label={t("phone")} name="phone" />
-      <Input
-        className="block"
-        control={control}
-        disabled={isSubmitting}
-        label={t("fullName")}
-        name="fullName"
-      />
+      <Input className="block" control={control} disabled={isSubmitting} label={t("fullName")} name="name" />
       <UploadInput
         name="avatar"
         control={control}
