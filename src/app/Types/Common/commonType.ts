@@ -79,6 +79,8 @@ export type Nullable<T> = {
 export type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 export interface BaseDataType {
+  uuid: number;
   updated_at?: Date;
   created_at?: Date;
+  deleted_at?: Date;
 }

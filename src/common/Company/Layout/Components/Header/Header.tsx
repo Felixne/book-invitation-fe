@@ -6,7 +6,6 @@ import { Logo } from "@components/Logo";
 
 import { useSelector } from "../../../Hooks";
 import HeaderUserDropdown from "./HeaderUserDropdown";
-import HeaderLanguageSelector from "./LanguageSelector";
 import HeaderLoginButton from "./LoginButton";
 import LayoutHeaderNavbar from "./Navbar";
 
@@ -30,7 +29,6 @@ const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
           <LayoutHeaderNavbar />
         </div>
         <div className="flex h-full w-fit items-center space-x-6">
-          <HeaderLanguageSelector />
           {_.isEmpty(user) ? <HeaderLoginButton /> : <HeaderUserDropdown />}
         </div>
       </div>

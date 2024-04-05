@@ -2,8 +2,7 @@ import { UNPROCESSABLE_ENTITY } from "http-status";
 import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { Alert } from "@components/Alert";
 import { Button } from "@components/Button";
@@ -13,12 +12,11 @@ import { AUTH_PATH } from "@constants/routeConstant";
 import useDocumentTitle from "@hooks/useDocumentTitle";
 import { AuthFormGeneralError, AuthRegisterFormDataType } from "@interfaces/Common";
 import { authService } from "@services/index";
-import { setUser } from "@slices/commonSlice";
+import { setAuthToken } from "@services/Common/authService";
 
 import { registerFormSchema } from "@auth/Schemas/RegisterFormSchema";
 
 import AuthFormContainer from "../Components/AuthFormContainer";
-import { generateAuthRedirectURL } from "../Utils/GenerateAuthRedirectURL";
 import RegisterFormFooter from "./Components/RegisterFormFooter";
 
 const Register = () => {
@@ -27,9 +25,6 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);
   const [searchParams] = useSearchParams();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const {
     control,
@@ -49,13 +44,9 @@ const Register = () => {
     authService
       .register(formData)
       .then((userData) => {
-        // const { accessToken, refreshToken, data: userData } = response;
-        const redirectURL = generateAuthRedirectURL([userData.role.slug], searchParams.get("redirect"));
-
-        // setAuthToken({ accessToken, refreshToken });
-        dispatch(setUser(userData));
-
-        navigate(redirectURL);
+        const { token } = userData.data;
+        // const redirectURL = generateAuthRedirectURL([userData.role.name], searchParams.get("redirect"));
+        setAuthToken(token);
       })
       .catch((err) => {
         const { status } = err.response.data;

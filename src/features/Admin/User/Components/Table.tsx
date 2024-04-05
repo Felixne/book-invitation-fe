@@ -22,16 +22,14 @@ const AdminUserTable = ({ data, isLoading, onGetAll, onClickEdit, onClickDelete 
 
   const columns: Array<ColumnDef<UserDataType, string>> = useMemo(
     () => [
-      columnHelper.accessor((row) => String(row.id), {
+      columnHelper.accessor((row) => String(row.uuid), {
         id: "id",
         header: t("id"),
       }),
       columnHelper.display({
         id: "avatar",
         header: t("avatar"),
-        cell: (props) => (
-          <TableImageColumn src={props.row.original.avatar} alt={props.row.original.fullName} />
-        ),
+        cell: (props) => <TableImageColumn alt={props.row.original.name} />,
         meta: {
           skeleton: <TableImageColumn skeleton />,
         },
@@ -44,8 +42,8 @@ const AdminUserTable = ({ data, isLoading, onGetAll, onClickEdit, onClickDelete 
           getFilterOptions: onGetAll,
         },
       }),
-      columnHelper.accessor((row) => row.fullName, {
-        id: "fullName",
+      columnHelper.accessor((row) => row.name, {
+        id: "name",
         header: t("fullName"),
         meta: {
           filterBy: "fullName",
@@ -53,15 +51,11 @@ const AdminUserTable = ({ data, isLoading, onGetAll, onClickEdit, onClickDelete 
           getFilterOptions: onGetAll,
         },
       }),
-      columnHelper.accessor((row) => row.phone, {
-        id: "phone",
-        header: t("phone"),
-      }),
       columnHelper.display({
         id: "actions",
         cell: (props) => (
           <AdminUserTableRowAction
-            id={props.row.original.id}
+            id={props.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
           />

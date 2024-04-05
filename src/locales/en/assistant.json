@@ -21,5 +21,7 @@
   "trustAndLegal": "Trust & Legal",
   "userManagement": "User Management",
   "design": "Design",
-  "product":"Product"
+  "product":"Product",
+  "unknow":"Some thing went wrong. Please try it again",
+  "loadMore":"Load more"
 }
