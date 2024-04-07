@@ -4,13 +4,13 @@ import TableRowActionEdit from "@components/Table/TableRowAction/TableRowActionE
 import { TableOnclickFunctionType } from "@interfaces/Common";
 import { TableRowActionDelete } from "@components/Table";
 
-export interface AdminUserTableRowActionProps {
+export interface AdminProductTableRowActionProps {
   id: number;
   onClickEdit: TableOnclickFunctionType<number>;
   onClickDelete: TableOnclickFunctionType<number>;
 }
 
-const AdminUserTableRowAction = ({ id, onClickEdit, onClickDelete }: AdminUserTableRowActionProps) => {
+const AdminProductTableRowAction = ({ id, onClickEdit, onClickDelete }: AdminProductTableRowActionProps) => {
   return (
     <div className="flex items-center justify-end space-x-2">
       <TableRowActionEdit data={id} onClick={onClickEdit} />
@@ -19,4 +19,4 @@ const AdminUserTableRowAction = ({ id, onClickEdit, onClickDelete }: AdminUserTa
   );
 };
 
-export default memo(AdminUserTableRowAction);
+export default memo(AdminProductTableRowAction);

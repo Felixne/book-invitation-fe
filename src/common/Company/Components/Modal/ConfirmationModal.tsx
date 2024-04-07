@@ -25,7 +25,7 @@ const ConfirmationModal = ({
   onClose,
   ...props
 }: ConfirmationModalProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmError, setConfirmError] = useState<string | null>(null);

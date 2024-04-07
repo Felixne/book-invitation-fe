@@ -6,7 +6,7 @@ import {
   AuthTokenType,
   UserDataType,
 } from "@interfaces/Common";
-import { Axios, axiosInstance } from "@utils/index";
+import { axiosInstance } from "@utils/index";
 
 // const fakeUserData: UserDataType = {
 //   id: 0,
@@ -101,7 +101,7 @@ const getRefreshToken = () => {
 };
 
 const refreshAccessToken = async (refreshToken: string) => {
-  const response = await Axios.instance.post(
+  const response = await axiosInstance.post(
     AUTH_API_PATH.REFRESH_TOKEN,
     {
       refreshToken,

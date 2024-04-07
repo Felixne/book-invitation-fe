@@ -11,7 +11,7 @@ import AdminUserModificationModal from "./Components/ModificationModal";
 import AdminUserTable from "./Components/Table";
 
 const AdminUserManagement = () => {
-  const { t } = useTranslation("admin");
+  const { t } = useTranslation();
 
   const [userData, setUserData] = useState<UserDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +66,6 @@ const AdminUserManagement = () => {
       <AdminUserTable
         data={userData}
         isLoading={isLoading}
-        onGetAll={adminUserService.getUsers}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
       />

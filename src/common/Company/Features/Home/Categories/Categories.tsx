@@ -20,7 +20,7 @@ const Categories = () => {
       const { data } = await getCaterories();
       setCategories(data);
     } catch (error) {
-      toast.error(t("unknow"));
+      toast.error(t("unknown"));
     } finally {
       setIsLoading(false);
     }
@@ -31,7 +31,7 @@ const Categories = () => {
   }, [fetchData]);
 
   return (
-    <div className="w-full h-fit xs:px-6 md:px-20 xl:px-40 py-8 xs:flex xs:overflow-x-scroll md:overflow-auto md:grid md:grid-cols-5 xs:gap-x-4 md:gap-x-6  ">
+    <div className="w-full h-fit xs:px-6 md:px-20 xl:px-40 my-8 xs:flex xs:overflow-x-scroll md:overflow-auto md:grid md:grid-cols-5 xs:gap-x-4 md:gap-x-6  ">
       {!isLoading && categories.map((item) => <CategoryItem key={item.uuid} name={item.name} />)}
       {isLoading &&
         Array.from({ length: 5 }).map((_1, index) => (

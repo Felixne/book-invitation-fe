@@ -20,7 +20,7 @@ import { loginFormSchema } from "../Schemas/LoginFormSchema";
 import LoginFormFooter from "./Components/LoginFormFooter";
 
 const Login = () => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);

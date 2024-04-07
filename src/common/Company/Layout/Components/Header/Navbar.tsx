@@ -16,7 +16,7 @@ const LayoutHeaderNavbar = () => {
         {t("design")}
       </Link>
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.BLOGS}>
-        {t("blog")}
+        {t("blogs")}
       </Link>
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.CONTACT}>
         {t("contact")}
