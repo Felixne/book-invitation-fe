@@ -20,7 +20,7 @@ const Product = () => {
       const { data } = await getProducts();
       setProductData(data);
     } catch (error) {
-      toast.error(t("unknow"));
+      toast.error(t("unknown"));
     } finally {
       setIsLoading(false);
     }

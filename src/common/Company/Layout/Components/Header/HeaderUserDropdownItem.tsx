@@ -11,7 +11,7 @@ interface HeaderUserDropdownItemProps {
 }
 
 const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const user = useSelector((state) => state.common.user);
 
@@ -56,7 +56,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
       >
         <FiSettings />
         <p className="ml-3 text-sm">
-          <Link to="dashboard">{t("dashboard")}</Link>
+          <Link to="/admin/dashboard">{t("dashboard")}</Link>
         </p>
       </div>
       <div

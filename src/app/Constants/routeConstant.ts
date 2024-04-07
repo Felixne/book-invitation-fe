@@ -11,6 +11,10 @@ export const MY_PATH = {
 
 export const ADMIN_PATH = {
   HOME: "/admin",
+  USER: "/admin/user",
+  PRODUCT: "/admin/product",
+  CATEGORY: "/admin/category",
+  ORDER: "/admin/order",
 };
 
 export const SYSTEM_PATH = {
@@ -19,20 +23,11 @@ export const SYSTEM_PATH = {
 
 export const HOME_PATH = {
   CARD: "/card",
-  COMPANY: "/company",
-  FEATURES: "/features",
   BLOGS: "/blogs",
-  PARTNERS: "/partners",
   CONTACT: "/contact",
-  GETTING_STARTED: "/getting-started",
-  DOCUMENTATION: "/documentation",
-  GUIDE: "/guide",
-  FAQ: "/faq",
-  TERM: "/term",
-  NOTICE: "/notice",
-  CLAIM: "/claim",
   HOME: "/",
   NOT_FOUND: "*",
+  DESIGN: "/design",
 };
 
 export const PRODUCT_PATH = {

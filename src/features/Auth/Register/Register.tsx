@@ -20,7 +20,7 @@ import AuthFormContainer from "../Components/AuthFormContainer";
 import RegisterFormFooter from "./Components/RegisterFormFooter";
 
 const Register = () => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);

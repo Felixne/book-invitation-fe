@@ -10,7 +10,7 @@ export interface LayoutSidebarItemProps {
   id: string;
   sidebarId?: string;
   to: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   isChild?: boolean;
   text: string;
   textColor?: string;
@@ -78,15 +78,16 @@ const LayoutSidebarItem = ({
         data-tooltip-position-strategy="fixed"
         data-tooltip-offset={16}
       >
-        {cloneElement(icon, {
-          className: twMerge(
-            "flex-shrink-0 w-5 mr-4 group-hover:text-primary-600 ml-0.5 xs:ml-0",
-            className,
-            textColor,
-            isCollapsed && (isSEM || (isGitlab && !isChild)) && "mr-0",
-          ),
-          size: 20,
-        })}
+        {icon &&
+          cloneElement(icon, {
+            className: twMerge(
+              "flex-shrink-0 w-5 mr-4 group-hover:text-primary-600 ml-0.5 xs:ml-0",
+              className,
+              textColor,
+              isCollapsed && (isSEM || (isGitlab && !isChild)) && "mr-0",
+            ),
+            size: 20,
+          })}
         {!(isCollapsed && isGitlab && !isChild) && (
           <div
             className={twMerge(

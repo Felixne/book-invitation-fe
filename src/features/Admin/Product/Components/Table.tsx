@@ -3,51 +3,56 @@ import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import Table from "@components/Table/Table";
-import TableImageColumn from "@components/Table/TableImageColumn";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
-import { UserDataType } from "@interfaces/Common";
+import { ProductDataType } from "@interfaces/Common/productType";
+import TableImageColumn from "@components/Table/TableImageColumn";
 import { TableImageColumnTypeEnum } from "@enums/commonEnum";
 
-import AdminUserTableRowAction, { AdminUserTableRowActionProps } from "./TableRowAction";
+import AdminProductTableRowAction, { AdminProductTableRowActionProps } from "./TableRowAction";
 
-interface AdminUserTableProps extends Omit<AdminUserTableRowActionProps, "id"> {
-  data: UserDataType[];
+interface AdminProductTableProps extends Omit<AdminProductTableRowActionProps, "id"> {
+  data: ProductDataType[];
   isLoading: boolean;
 }
 
-const AdminUserTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminUserTableProps) => {
+const AdminProductTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminProductTableProps) => {
   const { t } = useTranslation();
 
-  const columnHelper = useMemo(() => createColumnHelper<UserDataType>(), []);
+  const columnHelper = useMemo(() => createColumnHelper<ProductDataType>(), []);
 
-  const columns: Array<ColumnDef<UserDataType, string>> = useMemo(
+  const columns: Array<ColumnDef<ProductDataType, string>> = useMemo(
     () => [
       columnHelper.accessor((row) => String(row.uuid), {
         id: "id",
         header: t("id"),
       }),
       columnHelper.display({
-        id: "avatar",
-        header: t("avatar"),
+        id: "img",
+        header: t("img"),
         cell: (props) => (
-          <TableImageColumn alt={props.row.original.name} type={TableImageColumnTypeEnum.ROUNDED} />
+          <TableImageColumn
+            className="w-28 h-40 rounded-md"
+            src={props.row.original.image}
+            alt={props.row.original.name}
+            type={TableImageColumnTypeEnum.BOX}
+          />
         ),
         meta: {
-          skeleton: <TableImageColumn skeleton type={TableImageColumnTypeEnum.ROUNDED} />,
+          skeleton: <TableImageColumn skeleton type={TableImageColumnTypeEnum.BOX} />,
         },
-      }),
-      columnHelper.accessor((row) => row.email, {
-        id: "email",
-        header: t("email"),
       }),
       columnHelper.accessor((row) => row.name, {
         id: "name",
         header: t("name"),
       }),
+      columnHelper.accessor((row) => row.description, {
+        id: "description",
+        header: t("description"),
+      }),
       columnHelper.display({
         id: "actions",
         cell: (props) => (
-          <AdminUserTableRowAction
+          <AdminProductTableRowAction
             id={props.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
@@ -65,10 +70,10 @@ const AdminUserTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminUs
     <Table
       data={data}
       meta={null}
-      columns={columns as Array<ColumnDef<UserDataType>>}
+      columns={columns as Array<ColumnDef<ProductDataType>>}
       isLoading={isLoading}
     />
   );
 };
 
-export default memo(AdminUserTable);
+export default memo(AdminProductTable);

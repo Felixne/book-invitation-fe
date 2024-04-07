@@ -20,7 +20,7 @@ const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
 
   return (
     <div className="sticky top-0 z-50 h-20 w-full bg-white shadow-md" ref={headerRef}>
-      <div className="flex h-full w-full justify-between px-8">
+      <div className="flex h-full w-full justify-between xs:px-4 md:px-8">
         <div className="flex items-center justify-start">
           {prefix}
           <Link to="/" className="flex h-full flex-shrink-0 items-center">

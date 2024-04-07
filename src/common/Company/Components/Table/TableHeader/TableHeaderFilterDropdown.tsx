@@ -35,7 +35,7 @@ const TableHeaderFilterDropdown = ({
   onClearSelectedFilters,
   onHide,
 }: TableHeaderFilterDropdownProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [filterSearchValue, setFilterSearchValue] = useState("");

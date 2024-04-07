@@ -35,7 +35,7 @@ const AdminUserModificationModal = ({
   onEdited,
   ...props
 }: AdminUserModificationModalProps) => {
-  const { t } = useTranslation("admin");
+  const { t } = useTranslation();
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -128,9 +128,15 @@ const AdminUserModificationModal = ({
       onConfirm={handleSubmit}
       {...props}
     >
-      <Input className="block" control={control} disabled={isSubmitting} label={t("email")} name="email" />
       <Input
-        className="block"
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("email")}
+        name="email"
+      />
+      <Input
+        className="block w-full"
         control={control}
         disabled={isSubmitting}
         label={t("password")}
@@ -138,8 +144,15 @@ const AdminUserModificationModal = ({
         type="password"
         autoSave="off"
       />
-      <Input className="block" control={control} disabled={isSubmitting} label={t("fullName")} name="name" />
+      <Input
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("name")}
+        name="name"
+      />
       <UploadInput
+        containerClassName="w-full"
         name="avatar"
         control={control}
         disabled={isSubmitting}
