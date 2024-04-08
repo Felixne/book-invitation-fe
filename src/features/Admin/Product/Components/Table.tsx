@@ -7,15 +7,18 @@ import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { ProductDataType } from "@interfaces/Common/productType";
 import TableImageColumn from "@components/Table/TableImageColumn";
 import { TableImageColumnTypeEnum } from "@enums/commonEnum";
+import { TableProps } from "@components/Table";
 
 import AdminProductTableRowAction, { AdminProductTableRowActionProps } from "./TableRowAction";
 
-interface AdminProductTableProps extends Omit<AdminProductTableRowActionProps, "id"> {
+interface AdminProductTableProps
+  extends Omit<TableProps, "columns">,
+    Omit<AdminProductTableRowActionProps, "id"> {
   data: ProductDataType[];
   isLoading: boolean;
 }
 
-const AdminProductTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminProductTableProps) => {
+const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: AdminProductTableProps) => {
   const { t } = useTranslation();
 
   const columnHelper = useMemo(() => createColumnHelper<ProductDataType>(), []);
@@ -23,7 +26,7 @@ const AdminProductTable = ({ data, isLoading, onClickEdit, onClickDelete }: Admi
   const columns: Array<ColumnDef<ProductDataType, string>> = useMemo(
     () => [
       columnHelper.accessor((row) => String(row.uuid), {
-        id: "id",
+        id: "uuid",
         header: t("id"),
       }),
       columnHelper.display({
@@ -69,7 +72,7 @@ const AdminProductTable = ({ data, isLoading, onClickEdit, onClickDelete }: Admi
   return (
     <Table
       data={data}
-      meta={null}
+      meta={meta}
       columns={columns as Array<ColumnDef<ProductDataType>>}
       isLoading={isLoading}
     />

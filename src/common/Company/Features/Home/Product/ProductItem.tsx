@@ -16,7 +16,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
         </div>
         <div className="w-full p-4">
           <div className="font-semibold">{product.name}</div>
-          <div className="text-sm text-pink-400">{`${product.price} đ`}</div>
+          <div className="text-sm text-slate-500">{`${product.price} đ`}</div>
         </div>
       </div>
     </Link>

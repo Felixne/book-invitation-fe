@@ -1,5 +1,5 @@
 import { CategoryDataType } from "./categoryType";
-import { BaseDataType } from "./commonType";
+import { BaseDataType, Nullable } from "./commonType";
 
 export interface ProductDataType extends BaseDataType {
   name: string;
@@ -9,3 +9,5 @@ export interface ProductDataType extends BaseDataType {
   category_uuid: number;
   category: CategoryDataType;
 }
+
+export interface ProductFormDataType extends Nullable<Partial<ProductDataType>> {}

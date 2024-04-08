@@ -9,7 +9,7 @@ import { ADMIN_PATH } from "@constants/routeConstant";
 const AdminSidebar = () => {
   const { t } = useTranslation();
   return (
-    <LayoutSidebar id="adminSidebar" className="pt-20" sidebarLinkClassName="border-none mt-0">
+    <LayoutSidebar id="adminSidebar" className="pt-20">
       <LayoutSidebarItem
         id="order"
         icon={<MdOutlineShoppingCart />}

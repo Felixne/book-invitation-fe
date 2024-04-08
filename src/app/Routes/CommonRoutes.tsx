@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { isNull } from "lodash";
 import { lazy, memo, useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { Route, Routes, matchPath, useNavigate } from "react-router-dom";
 import ProductRoutes from "src/features/Product/ProductRoutes";
@@ -6,6 +6,7 @@ import ProductRoutes from "src/features/Product/ProductRoutes";
 import { ErrorRoutes } from "@features/Error";
 import useDispatch from "@hooks/useDispatch";
 import useSelector from "@hooks/useSelector";
+import { getAuthToken } from "@services/Common/authService";
 
 import { LoadingOverlay } from "../../common/Company/Components";
 import { AUTH_PATH } from "../Constants";
@@ -19,6 +20,7 @@ const CommonRoutes = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const user = useSelector((state) => state.common.user);
+  const token = getAuthToken();
 
   const excludeRedirectPaths = useMemo(() => ["/", "error/*", "auth/*", "docs/*"], []);
   const excludeGetUserPaths = useMemo(() => [], []);
@@ -33,7 +35,7 @@ const CommonRoutes = () => {
   }, [dispatch]);
 
   useLayoutEffect(() => {
-    if (user?.uuid) {
+    if (user?.uuid || isNull(token)) {
       setIsLoading(false);
       return;
     }
@@ -58,7 +60,6 @@ const CommonRoutes = () => {
           if (isMatchedExcludeRedirectPath) {
             return;
           }
-
           const from = pathname;
           navigate(`${AUTH_PATH.LOGIN}?redirect=${encodeURIComponent(from)}`);
         })
@@ -66,7 +67,7 @@ const CommonRoutes = () => {
           setIsLoading(false);
         });
     }
-  }, [dispatch, navigate, excludeGetUserPaths, excludeRedirectPaths, user]);
+  }, [dispatch, navigate, excludeGetUserPaths, excludeRedirectPaths, user, token]);
 
   useLayoutEffect(() => {
     getPublicConfigs();

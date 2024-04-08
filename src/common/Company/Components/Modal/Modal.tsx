@@ -13,10 +13,12 @@ const Modal = (
     isShowHeader = true,
     isShowFooter,
     isAllowSubmit,
+    isFormModal,
     isLoading,
     title,
     children,
     className,
+    childrenClassName,
     onClose,
     onConfirm,
   }: ModalProps,
@@ -62,8 +64,10 @@ const Modal = (
             >
               <ModalContent
                 className={className}
+                childrenClassName={childrenClassName}
                 isShowHeader={isShowHeader}
                 isShowFooter={isShowFooter}
+                isFormModal={isFormModal}
                 isAllowSubmit={isAllowSubmit}
                 isLoading={isLoading}
                 title={title}

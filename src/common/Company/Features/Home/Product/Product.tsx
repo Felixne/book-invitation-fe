@@ -42,9 +42,9 @@ const Product = () => {
           ))}
       </div>
       <div className="w-full py-8 flex justify-center items-center">
-        <div className="w-40 h-10">
-          <Button color="light" className="w-full h-full">
-            Load more
+        <div className="xs:w-40 md:w-48 h-10">
+          <Button color="primary" className="w-full h-full">
+            {t("loadMore")}
           </Button>
         </div>
       </div>

@@ -22,14 +22,19 @@ export const COMMON_API_PATH = {
 };
 
 export const CATEGORY_API_PATH = {
-  CATEGORIES: "/api/categories",
+  CATEGORIES: "api/categories",
+  CATEGORY: "api/category",
+  CATEGORY_ID: (id: number) => `api/category/${id}`,
 };
 
 export const USER_API_PATH = {
   USERS: "api/users",
+  USER: "api/user",
+  USER_ID: (id: number) => `api/user/${id}`,
 };
 
 export const PRODUCT_API_PATH = {
   PRODUCTS: "api/products",
+  PRODUCT: "api/product",
   PRODUCT_ID: (id: number) => `api/product/${id}`,
 };

@@ -28,6 +28,7 @@ export const HOME_PATH = {
   HOME: "/",
   NOT_FOUND: "*",
   DESIGN: "/design",
+  PRODUCT: "/product",
 };
 
 export const PRODUCT_PATH = {

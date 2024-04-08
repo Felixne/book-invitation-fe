@@ -5,6 +5,7 @@ import { LayoutContentWrapper } from "@common/Layout";
 import { ConfirmationModal } from "@components/Modal";
 import { UserDataType } from "@interfaces/Common";
 import { adminUserService } from "@services/index";
+import { deleteUser } from "@services/Admin/userService";
 
 import AdminUserHeaderAction from "./Components/HeaderAction";
 import AdminUserModificationModal from "./Components/ModificationModal";
@@ -58,6 +59,14 @@ const AdminUserManagement = () => {
     fetchData();
   }, [fetchData]);
 
+  const handleDelete = useCallback(async () => {
+    try {
+      await deleteUser(selectedUserId as number);
+    } finally {
+      fetchData();
+    }
+  }, [selectedUserId, fetchData]);
+
   return (
     <LayoutContentWrapper
       title={t("userManagement")}
@@ -71,18 +80,18 @@ const AdminUserManagement = () => {
       />
       <ConfirmationModal
         title={t("deleteUser", { name: selectedUser?.name })}
-        message='Người dùng "Nguyễn Văn A" sẽ bị xoá khỏi hệ thống. Thao tác này không thể hoàn tác.'
+        message={t("deleteMessage")}
         isOpen={isShowDeleteModal}
         status="danger"
-        onClose={() => setIsShowDeleteModal(false)}
-        onConfirm={() => setIsShowDeleteModal(true)}
+        onClose={handleCloseModal}
+        onConfirm={handleDelete}
       />
       <AdminUserModificationModal
         isOpen={isShowModificationModal}
         user={selectedUser}
         onCreate={adminUserService.createUser}
         onCreated={fetchData}
-        onEdit={adminUserService.updateUserById}
+        onEdit={adminUserService.editUser}
         onEdited={fetchData}
         onClose={handleCloseModal}
       />

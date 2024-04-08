@@ -36,6 +36,10 @@ const AdminUserTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminUs
           skeleton: <TableImageColumn skeleton type={TableImageColumnTypeEnum.ROUNDED} />,
         },
       }),
+      columnHelper.accessor((row) => row.username, {
+        id: "username",
+        header: t("username"),
+      }),
       columnHelper.accessor((row) => row.email, {
         id: "email",
         header: t("email"),
