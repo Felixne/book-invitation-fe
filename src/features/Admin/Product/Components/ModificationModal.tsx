@@ -8,34 +8,35 @@ import UploadInput from "@components/Form/UploadInput/UploadInput";
 import { Modal } from "@components/Modal";
 import { ModalProps } from "@components/Modal/interface";
 import useToast from "@hooks/useToast";
-import { UserDataType, UserFormDataType } from "@interfaces/Common";
 import { setFormError } from "@utils/Helpers/errorHelper";
+import { ProductDataType, ProductFormDataType } from "@interfaces/Common/productType";
 
-interface AdminUserModificationModalProps extends ModalProps {
-  user: UserDataType | null;
-  onCreate: (user: UserFormDataType) => Promise<void>;
+interface AdminProductModificationModalProps extends ModalProps {
+  product: ProductDataType | null;
+  onCreate: (product: ProductFormDataType) => Promise<void>;
   onCreated: () => void;
-  onEdit: (id: number, user: UserFormDataType) => Promise<void>;
+  onEdit: (id: number, product: ProductFormDataType) => Promise<void>;
   onEdited: () => void;
 }
 
-const DEFAULT_VALUE: UserFormDataType = {
-  email: "",
+const DEFAULT_VALUE: ProductFormDataType = {
+  category_uuid: 1,
   name: "",
-  password: "",
-  username: "",
+  price: "",
+  description: "",
+  image: "",
 };
 
-const AdminUserModificationModal = ({
+const AdminProductModificationModal = ({
   isOpen,
-  user,
+  product,
   onClose,
   onCreate,
   onCreated,
   onEdit,
   onEdited,
   ...props
-}: AdminUserModificationModalProps) => {
+}: AdminProductModificationModalProps) => {
   const { t } = useTranslation();
   const toast = useToast();
 
@@ -50,16 +51,16 @@ const AdminUserModificationModal = ({
     reset,
     handleSubmit: useFormSubmit,
     ...methods
-  } = useForm<UserFormDataType>({
-    // resolver: yupResolver(adminUserModificationFormSchema(t)),
+  } = useForm<ProductFormDataType>({
+    // resolver: yupResolver(adminProductModificationFormSchema(t)),
     defaultValues: DEFAULT_VALUE,
   });
 
-  const handleCreateUser = useCallback(
-    async (formData: UserFormDataType) => {
+  const handleCreateProduct = useCallback(
+    async (formData: ProductFormDataType) => {
       try {
         await onCreate(formData);
-        toast.success(t("addUserSuccessfully"));
+        toast.success(t("addProductSuccessfully"));
         onCreated();
         onClose();
       } catch (error) {
@@ -73,12 +74,12 @@ const AdminUserModificationModal = ({
     [handleUnknownError, methods.setError, onClose, onCreate, onCreated, t, toast],
   );
 
-  const handleEditUser = useCallback(
-    async (formData: UserFormDataType) => {
-      if (!user) return;
+  const handleEditProduct = useCallback(
+    async (formData: ProductFormDataType) => {
+      if (!product) return;
       try {
-        await onEdit(user.uuid as number, formData);
-        toast.success(t("edit"));
+        await onEdit(product.uuid as number, formData);
+        toast.success(t("editProductSuccessfully"));
         onEdited();
         onClose();
       } catch (error) {
@@ -89,19 +90,19 @@ const AdminUserModificationModal = ({
         setIsSubmitting(false);
       }
     },
-    [handleUnknownError, methods.setError, onClose, onEdit, onEdited, t, toast, user],
+    [handleUnknownError, methods.setError, onClose, onEdit, onEdited, t, toast, product],
   );
 
   const handleSubmit = useFormSubmit(async (formData) => {
     setIsSubmitting(true);
 
-    if (!user) {
-      handleCreateUser(formData);
+    if (!product) {
+      handleCreateProduct(formData);
 
       return;
     }
 
-    handleEditUser(formData);
+    handleEditProduct(formData);
   });
 
   useEffect(() => {
@@ -111,20 +112,20 @@ const AdminUserModificationModal = ({
 
     setIsSubmitting(false);
 
-    if (user) {
-      reset(user);
+    if (product) {
+      reset(product);
       return;
     }
 
     reset(DEFAULT_VALUE);
-  }, [isOpen, reset, user]);
+  }, [isOpen, reset, product]);
 
   return (
     <Modal
       isLoading={isSubmitting}
       isOpen={isOpen}
       isFormModal
-      title={user ? t("editUser") : t("addUser")}
+      title={product ? t("editProduct") : t("addProduct")}
       onClose={onClose}
       onConfirm={handleSubmit}
       {...props}
@@ -133,44 +134,34 @@ const AdminUserModificationModal = ({
         className="block w-full"
         control={control}
         disabled={isSubmitting}
-        label={t("username")}
-        name="username"
-      />
-      <Input
-        className="block"
-        control={control}
-        disabled={isSubmitting}
-        label={t("password")}
-        name="password"
-        type="password"
-        autoSave="off"
-      />
-      <Input
-        className="block w-full"
-        control={control}
-        disabled={isSubmitting}
-        label={t("email")}
-        name="email"
-      />
-      <Input
-        className="block w-full"
-        control={control}
-        disabled={isSubmitting}
         label={t("name")}
         name="name"
       />
-
+      <Input
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("description")}
+        name="description"
+      />
+      <Input
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("price")}
+        name="price"
+      />
       <UploadInput
         containerClassName="w-full"
-        name="avatar"
+        name="image"
         control={control}
         disabled={isSubmitting}
         multiple={false}
-        label={t("avatar")}
-        placeholder={t("chooseAvatar")}
+        label={t("image")}
+        placeholder={t("chooseImage")}
       />
     </Modal>
   );
 };
 
-export default memo(AdminUserModificationModal);
+export default memo(AdminProductModificationModal);

@@ -1,6 +1,6 @@
 import { PRODUCT_API_PATH } from "@constants/apiConstant";
 import { BaseListQueryType, ResponseDataType } from "@interfaces/Common";
-import { ProductDataType } from "@interfaces/Common/productType";
+import { ProductDataType, ProductFormDataType } from "@interfaces/Common/productType";
 import { axiosInstance } from "@utils/Axios";
 
 const getProducts = async (params?: BaseListQueryType): Promise<ResponseDataType<ProductDataType[]>> => {
@@ -16,4 +16,14 @@ const getProductById = async (id: number): Promise<ProductDataType> => {
   return response.data.data;
 };
 
-export { getProducts, getProductById };
+const createProduct = async (data: ProductFormDataType) => {
+  await axiosInstance.post(PRODUCT_API_PATH.PRODUCT, data);
+};
+const editProduct = async (id: number, data: ProductFormDataType) => {
+  await axiosInstance.put(PRODUCT_API_PATH.PRODUCT_ID(id), data);
+};
+const deleteProduct = async (id: number) => {
+  await axiosInstance.delete(PRODUCT_API_PATH.PRODUCT_ID(id));
+};
+
+export { getProducts, getProductById, createProduct, editProduct, deleteProduct };

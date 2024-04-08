@@ -5,15 +5,24 @@ import { useTranslation } from "react-i18next";
 import Table from "@components/Table/Table";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { CategoryDataType } from "@interfaces/Common/categoryType";
+import { TableProps } from "@components/Table";
 
 import AdminCategoryTableRowAction, { AdminCategoryTableRowActionProps } from "./TableRowAction";
 
-interface AdminCategoryTableProps extends Omit<AdminCategoryTableRowActionProps, "id"> {
+interface AdminCategoryTableProps
+  extends Omit<TableProps, "columns">,
+    Omit<AdminCategoryTableRowActionProps, "id"> {
   data: CategoryDataType[];
   isLoading: boolean;
 }
 
-const AdminCategoryTable = ({ data, isLoading, onClickEdit, onClickDelete }: AdminCategoryTableProps) => {
+const AdminCategoryTable = ({
+  data,
+  meta,
+  isLoading,
+  onClickEdit,
+  onClickDelete,
+}: AdminCategoryTableProps) => {
   const { t } = useTranslation();
 
   const columnHelper = useMemo(() => createColumnHelper<CategoryDataType>(), []);
@@ -52,7 +61,7 @@ const AdminCategoryTable = ({ data, isLoading, onClickEdit, onClickDelete }: Adm
   return (
     <Table
       data={data}
-      meta={null}
+      meta={meta}
       columns={columns as Array<ColumnDef<CategoryDataType>>}
       isLoading={isLoading}
     />

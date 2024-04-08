@@ -8,9 +8,10 @@ export interface UploadInputProps extends UncontrolledUploadInputProps {
   name: string;
   control?: Control<any, any>;
   rules?: Record<string, any>;
+  containerClassName?: string;
 }
 
-const UploadInput = ({ name, control, rules, multiple, ...props }: UploadInputProps) => {
+const UploadInput = ({ name, control, rules, multiple, containerClassName, ...props }: UploadInputProps) => {
   if (!control || !control.register) {
     return <UncontrolledUploadInput name={name} multiple={multiple} {...props} />;
   }
@@ -31,6 +32,7 @@ const UploadInput = ({ name, control, rules, multiple, ...props }: UploadInputPr
       multiple={multiple}
       onChange={onChange}
       onBlur={onBlur}
+      containerClassName={containerClassName}
       {...omit(props, ["value", "onChange", "onBlur"])}
     />
   );

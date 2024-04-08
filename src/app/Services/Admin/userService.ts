@@ -11,18 +11,17 @@ const getUsers = async (params?: BaseListQueryType) => {
   };
 };
 
-const createUser = async (data: UserFormDataType) =>
-  new Promise<UserFormDataType>((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 1000);
+const createUser = async (data: UserFormDataType) => {
+  await axiosInstance.post(USER_API_PATH.USER, {
+    ...data,
+    role_uuid: 2,
   });
+};
+const editUser = async (id: number, data: UserFormDataType) => {
+  await axiosInstance.put(USER_API_PATH.USER_ID(id), data);
+};
+const deleteUser = async (id: number) => {
+  await axiosInstance.delete(USER_API_PATH.USER_ID(id));
+};
 
-const updateUserById = async (id: number, data: UserFormDataType) =>
-  new Promise<UserFormDataType>((resolve) => {
-    setTimeout(() => {
-      resolve({ ...data, uuid: id });
-    }, 1000);
-  });
-
-export { createUser, getUsers, updateUserById };
+export { createUser, getUsers, editUser, deleteUser };

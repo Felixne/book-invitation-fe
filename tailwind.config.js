@@ -18,9 +18,7 @@ module.exports = {
       },
       colors: {
         primary: {
-          ...colors.red,
-          700: "#bf1922",
-          500: "#e32832",
+          ...colors.violet,
         },
       },
       aspectRatio: {
@@ -59,6 +57,7 @@ module.exports = {
       width: {
         13: "3.25rem",
         4.5: "18px",
+        128: "32rem",
         160: "40rem",
         "fit-layout": "calc(100% - 288px)",
       },

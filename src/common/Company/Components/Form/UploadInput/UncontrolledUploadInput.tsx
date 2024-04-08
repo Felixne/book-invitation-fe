@@ -47,7 +47,7 @@ const UncontrolledUploadInput = ({
   placeholder,
   ...props
 }: UncontrolledUploadInputProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("company");
   const toast = useToast();
 
   const inputFileRef = useRef() as MutableRefObject<HTMLInputElement>;

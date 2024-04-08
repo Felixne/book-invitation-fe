@@ -4,38 +4,35 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { Input } from "@components/Form";
-import UploadInput from "@components/Form/UploadInput/UploadInput";
 import { Modal } from "@components/Modal";
 import { ModalProps } from "@components/Modal/interface";
 import useToast from "@hooks/useToast";
-import { UserDataType, UserFormDataType } from "@interfaces/Common";
 import { setFormError } from "@utils/Helpers/errorHelper";
+import { CategoryDataType, CategoryFormDataType } from "@interfaces/Common/categoryType";
 
-interface AdminUserModificationModalProps extends ModalProps {
-  user: UserDataType | null;
-  onCreate: (user: UserFormDataType) => Promise<void>;
+interface AdminCategoryModificationModalProps extends ModalProps {
+  category: CategoryDataType | null;
+  onCreate: (category: CategoryFormDataType) => Promise<void>;
   onCreated: () => void;
-  onEdit: (id: number, user: UserFormDataType) => Promise<void>;
+  onEdit: (id: number, category: CategoryFormDataType) => Promise<void>;
   onEdited: () => void;
 }
 
-const DEFAULT_VALUE: UserFormDataType = {
-  email: "",
+const DEFAULT_VALUE: CategoryFormDataType = {
   name: "",
-  password: "",
-  username: "",
+  description: "",
 };
 
-const AdminUserModificationModal = ({
+const AdminCategoryModificationModal = ({
   isOpen,
-  user,
+  category,
   onClose,
   onCreate,
   onCreated,
   onEdit,
   onEdited,
   ...props
-}: AdminUserModificationModalProps) => {
+}: AdminCategoryModificationModalProps) => {
   const { t } = useTranslation();
   const toast = useToast();
 
@@ -50,16 +47,16 @@ const AdminUserModificationModal = ({
     reset,
     handleSubmit: useFormSubmit,
     ...methods
-  } = useForm<UserFormDataType>({
+  } = useForm<CategoryFormDataType>({
     // resolver: yupResolver(adminUserModificationFormSchema(t)),
     defaultValues: DEFAULT_VALUE,
   });
 
-  const handleCreateUser = useCallback(
-    async (formData: UserFormDataType) => {
+  const handleCreateCategory = useCallback(
+    async (formData: CategoryFormDataType) => {
       try {
         await onCreate(formData);
-        toast.success(t("addUserSuccessfully"));
+        toast.success(t("addCategorySuccessfully"));
         onCreated();
         onClose();
       } catch (error) {
@@ -73,12 +70,12 @@ const AdminUserModificationModal = ({
     [handleUnknownError, methods.setError, onClose, onCreate, onCreated, t, toast],
   );
 
-  const handleEditUser = useCallback(
-    async (formData: UserFormDataType) => {
-      if (!user) return;
+  const handleEditCategory = useCallback(
+    async (formData: CategoryFormDataType) => {
+      if (!category) return;
       try {
-        await onEdit(user.uuid as number, formData);
-        toast.success(t("edit"));
+        await onEdit(category.uuid as number, formData);
+        toast.success(t("editCategorySuccessfully"));
         onEdited();
         onClose();
       } catch (error) {
@@ -89,19 +86,19 @@ const AdminUserModificationModal = ({
         setIsSubmitting(false);
       }
     },
-    [handleUnknownError, methods.setError, onClose, onEdit, onEdited, t, toast, user],
+    [handleUnknownError, methods.setError, onClose, onEdit, onEdited, t, toast, category],
   );
 
   const handleSubmit = useFormSubmit(async (formData) => {
     setIsSubmitting(true);
 
-    if (!user) {
-      handleCreateUser(formData);
+    if (!category) {
+      handleCreateCategory(formData);
 
       return;
     }
 
-    handleEditUser(formData);
+    handleEditCategory(formData);
   });
 
   useEffect(() => {
@@ -111,20 +108,20 @@ const AdminUserModificationModal = ({
 
     setIsSubmitting(false);
 
-    if (user) {
-      reset(user);
+    if (category) {
+      reset(category);
       return;
     }
 
     reset(DEFAULT_VALUE);
-  }, [isOpen, reset, user]);
+  }, [isOpen, reset, category]);
 
   return (
     <Modal
       isLoading={isSubmitting}
       isOpen={isOpen}
       isFormModal
-      title={user ? t("editUser") : t("addUser")}
+      title={category ? t("editCategory") : t("addCategory")}
       onClose={onClose}
       onConfirm={handleSubmit}
       {...props}
@@ -133,44 +130,18 @@ const AdminUserModificationModal = ({
         className="block w-full"
         control={control}
         disabled={isSubmitting}
-        label={t("username")}
-        name="username"
-      />
-      <Input
-        className="block"
-        control={control}
-        disabled={isSubmitting}
-        label={t("password")}
-        name="password"
-        type="password"
-        autoSave="off"
-      />
-      <Input
-        className="block w-full"
-        control={control}
-        disabled={isSubmitting}
-        label={t("email")}
-        name="email"
-      />
-      <Input
-        className="block w-full"
-        control={control}
-        disabled={isSubmitting}
         label={t("name")}
         name="name"
       />
-
-      <UploadInput
-        containerClassName="w-full"
-        name="avatar"
+      <Input
+        className="block w-full"
         control={control}
         disabled={isSubmitting}
-        multiple={false}
-        label={t("avatar")}
-        placeholder={t("chooseAvatar")}
+        label={t("description")}
+        name="description"
       />
     </Modal>
   );
 };
 
-export default memo(AdminUserModificationModal);
+export default memo(AdminCategoryModificationModal);

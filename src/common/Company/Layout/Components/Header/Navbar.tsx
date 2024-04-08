@@ -10,10 +10,10 @@ const LayoutHeaderNavbar = () => {
   return (
     <div className="ml-12 hidden items-center space-x-8 lg:flex">
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={PRODUCT_PATH.PRODUCT}>
-        {t("card")}
+        {t("product")}
       </Link>
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.CARD}>
-        {t("design")}
+        {t("card")}
       </Link>
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.BLOGS}>
         {t("blogs")}

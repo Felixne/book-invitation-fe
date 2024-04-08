@@ -49,7 +49,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         </div>
       </div>
       <div
-        className="mt-1 flex w-full items-center hover:text-red-600"
+        className="mt-1 flex w-full items-center hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={onClick}
@@ -60,7 +60,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         </p>
       </div>
       <div
-        className="mt-2 flex w-full items-center hover:text-red-600"
+        className="mt-2 flex w-full items-center hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={onClick}
@@ -71,7 +71,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         </Link>
       </div>
       <div
-        className="mt-4 flex w-full items-center border-t-2 border-gray-100 pt-3 hover:text-red-600"
+        className="mt-4 flex w-full items-center border-t-2 border-gray-100 pt-3 hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={handleClickLogout}
