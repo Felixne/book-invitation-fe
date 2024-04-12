@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import _, { set } from "lodash";
+import _, { isEmpty, set } from "lodash";
 
 import { getLocalStorageByKey, setLocalStorageByKey } from "@utils/Helpers/commonHelper";
 
+import { CartDataType } from "../Types/Common/cartType";
 import { LayoutSidebarTypeEnum } from "../../common/Company/Layout/constant";
 import { ConfigDataType } from "../Types/Common/configType";
 import { LanguageDataType } from "../Types/Common/languageType";
@@ -15,6 +16,7 @@ interface GlobalStateLayoutSidebarConfigType {
 }
 
 interface CommonGlobalStateType {
+  cart: CartDataType[];
   configs: ConfigDataType[];
   languages: LanguageDataType[];
   user: UserDataType | null;
@@ -34,6 +36,7 @@ const initialState: CommonGlobalStateType = {
   layoutSidebars: [],
   isOpenTimeoutModal: false,
   loadingOverlayIds: [],
+  cart: [],
 };
 
 export const commonSlice = createSlice({
@@ -111,6 +114,24 @@ export const commonSlice = createSlice({
     hideTimeoutModal: (state) => {
       state.isOpenTimeoutModal = false;
     },
+    addToCart: (state, actions: PayloadAction<CartDataType>) => {
+      const isIncludesCart = state.cart.find((item) => item.product_uuid === actions.payload.product_uuid);
+      if (isEmpty(isIncludesCart)) {
+        state.cart.push(actions.payload);
+      } else {
+        Object.assign(isIncludesCart, actions.payload);
+      }
+    },
+    removeToCart: (state, actions: PayloadAction<CartDataType>) => {
+      const isIncludesCart = state.cart.find((item) => item.product_uuid === actions.payload.product_uuid);
+      if (isEmpty(isIncludesCart)) return;
+      if (actions.payload.quantity >= 0) {
+        Object.assign(isIncludesCart, actions.payload);
+      }
+    },
+    setCarts: (state, actions: PayloadAction<CartDataType[]>) => {
+      state.cart = actions.payload;
+    },
   },
 });
 
@@ -132,6 +153,9 @@ export const {
   hideLoadingOverlay,
   showTimeoutModal,
   hideTimeoutModal,
+  addToCart,
+  removeToCart,
+  setCarts,
 } = actions;
 
 export default commonReducer;

@@ -17,6 +17,7 @@ import useToast from "@hooks/useToast";
 import { ImageDataType } from "@interfaces/Common";
 import { uploadService } from "@services/index";
 import { getImageURLFromFile } from "@utils/Helpers/imageHelper";
+import { ImageUploadTypeEnum } from "@enums/commonEnum";
 
 import EmptyUploadInput from "./EmptyUploadInput";
 import UploadInputContent from "./UploadInputContent";
@@ -69,15 +70,15 @@ const UncontrolledUploadInput = ({
       }
 
       try {
-        const image = await uploadService.uploadImage(imageFile);
+        const image = await uploadService.uploadImage(imageFile, ImageUploadTypeEnum.SYSTEM);
         const newFileData = image as ImageDataType;
 
         if (multiple) {
-          setImages((prev) => [...prev, newFileData.url]);
+          setImages((prev) => [...prev, newFileData.absolute_url]);
           isFirstRender.current = false;
           return;
         }
-        onChange?.(newFileData.url);
+        onChange?.(newFileData.absolute_url);
       } catch (err) {
         if (err instanceof AxiosError) {
           toast.error(t("uploadError"));

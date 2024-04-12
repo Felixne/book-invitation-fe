@@ -8,6 +8,8 @@ export interface UserRoleDataType {
   name: UserRoleEnum;
 }
 
+export interface UserRoleFormDataType extends Nullable<Partial<UserDataType>> {}
+
 export interface UserDataType extends BaseDataType {
   name: string;
   email: string;

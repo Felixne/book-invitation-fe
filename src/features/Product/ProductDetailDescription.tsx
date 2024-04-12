@@ -21,7 +21,7 @@ const ProductDetailDescription = ({ productData, isLoading }: ProductDetailImage
           <div className="font-semibold">{`${productData?.price} đ`}</div>
           <div className="w-full pt-2 text-gray-500">{productData?.description}</div>
           <div className="w-full my-6 h-0.5 rounded-full bg-gray-100" />
-          <ProductDetailQuantity />
+          <ProductDetailQuantity product={productData} />
           <div className="w-full my-8 h-0.5 rounded-full bg-gray-100" />
         </div>
       )}
