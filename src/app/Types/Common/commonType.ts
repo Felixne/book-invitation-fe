@@ -3,6 +3,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import { Key } from "react";
 import { AnySchema } from "yup";
 
+import { ImageUploadTypeEnum } from "@enums/commonEnum";
+
 export interface TableFilterStateType {
   filterBy: string;
   values: Array<string | number | Date>;
@@ -57,6 +59,7 @@ export type ServiceDeleteFunctionType = (id: Key) => Promise<unknown>;
 export type TableOnclickFunctionType<T = unknown> = (data: T) => void;
 
 export interface ImageDataType extends Partial<File> {
+  absolute_url: string;
   url: string;
   name?: string;
   type?: string;
@@ -79,6 +82,13 @@ export type Nullable<T> = {
 export type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 export interface BaseDataType {
+  uuid: number;
   updated_at?: Date;
   created_at?: Date;
+  deleted_at?: Date;
+}
+
+export interface ImageUploadDataType {
+  image: ImageDataType;
+  type: ImageUploadTypeEnum;
 }

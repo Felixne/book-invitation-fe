@@ -13,17 +13,17 @@ import { setFormError } from "@utils/Helpers/errorHelper";
 
 interface AdminUserModificationModalProps extends ModalProps {
   user: UserDataType | null;
-  onCreate: (user: UserFormDataType) => Promise<UserFormDataType>;
+  onCreate: (user: UserFormDataType) => Promise<void>;
   onCreated: () => void;
-  onEdit: (id: number, user: UserFormDataType) => Promise<UserFormDataType>;
+  onEdit: (id: number, user: UserFormDataType) => Promise<void>;
   onEdited: () => void;
 }
 
 const DEFAULT_VALUE: UserFormDataType = {
   email: "",
-  phone: "",
+  name: "",
   password: "",
-  fullName: "",
+  username: "",
 };
 
 const AdminUserModificationModal = ({
@@ -36,7 +36,7 @@ const AdminUserModificationModal = ({
   onEdited,
   ...props
 }: AdminUserModificationModalProps) => {
-  const { t } = useTranslation("admin");
+  const { t } = useTranslation();
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -77,7 +77,7 @@ const AdminUserModificationModal = ({
     async (formData: UserFormDataType) => {
       if (!user) return;
       try {
-        await onEdit(user.id as number, formData);
+        await onEdit(user.uuid as number, formData);
         toast.success(t("edit"));
         onEdited();
         onClose();
@@ -112,7 +112,7 @@ const AdminUserModificationModal = ({
     setIsSubmitting(false);
 
     if (user) {
-      reset({ ...user, password: "" });
+      reset(user);
       return;
     }
 
@@ -129,7 +129,13 @@ const AdminUserModificationModal = ({
       onConfirm={handleSubmit}
       {...props}
     >
-      <Input className="block" control={control} disabled={isSubmitting} label={t("email")} name="email" />
+      <Input
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("username")}
+        name="username"
+      />
       <Input
         className="block"
         control={control}
@@ -139,15 +145,23 @@ const AdminUserModificationModal = ({
         type="password"
         autoSave="off"
       />
-      <Input className="block" control={control} disabled={isSubmitting} label={t("phone")} name="phone" />
       <Input
-        className="block"
+        className="block w-full"
         control={control}
         disabled={isSubmitting}
-        label={t("fullName")}
-        name="fullName"
+        label={t("email")}
+        name="email"
       />
+      <Input
+        className="block w-full"
+        control={control}
+        disabled={isSubmitting}
+        label={t("name")}
+        name="name"
+      />
+
       <UploadInput
+        containerClassName="w-full"
         name="avatar"
         control={control}
         disabled={isSubmitting}

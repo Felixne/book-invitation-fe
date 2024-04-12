@@ -17,6 +17,7 @@ import useToast from "@hooks/useToast";
 import { ImageDataType } from "@interfaces/Common";
 import { uploadService } from "@services/index";
 import { getImageURLFromFile } from "@utils/Helpers/imageHelper";
+import { ImageUploadTypeEnum } from "@enums/commonEnum";
 
 import EmptyUploadInput from "./EmptyUploadInput";
 import UploadInputContent from "./UploadInputContent";
@@ -24,6 +25,7 @@ import UploadInputContent from "./UploadInputContent";
 export interface UncontrolledUploadInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "multiple"> {
   className?: string;
+  containerClassName?: string;
   error?: string;
   inlineError?: boolean;
   multiple: boolean;
@@ -35,6 +37,7 @@ export interface UncontrolledUploadInputProps
 
 const UncontrolledUploadInput = ({
   className,
+  containerClassName,
   error,
   inlineError = false,
   multiple,
@@ -67,15 +70,15 @@ const UncontrolledUploadInput = ({
       }
 
       try {
-        const image = await uploadService.uploadImage(imageFile);
+        const image = await uploadService.uploadImage(imageFile, ImageUploadTypeEnum.SYSTEM);
         const newFileData = image as ImageDataType;
 
         if (multiple) {
-          setImages((prev) => [...prev, newFileData.url]);
+          setImages((prev) => [...prev, newFileData.absolute_url]);
           isFirstRender.current = false;
           return;
         }
-        onChange?.(newFileData.url);
+        onChange?.(newFileData.absolute_url);
       } catch (err) {
         if (err instanceof AxiosError) {
           toast.error(t("uploadError"));
@@ -143,6 +146,7 @@ const UncontrolledUploadInput = ({
       className={twMerge(
         "relative block cursor-text rounded-lg border-2 border-gray-100 bg-white px-4 py-4 ring-inset transition-colors duration-100 hover:border-blue-500",
         disabled && "cursor-default bg-gray-50 ring-gray-100 hover:border-gray-100",
+        containerClassName,
       )}
     >
       <div

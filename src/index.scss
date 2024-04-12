@@ -122,9 +122,26 @@ body {
 }
 
 .spinner {
-  @apply z-10 h-8 w-8 animate-spin stroke-primary-700 duration-200;
+  @apply z-10 h-8 w-8 animate-spin stroke-slate-700 duration-200;
 
   & .path {
     @apply animate-dash stroke-inherit;
   }
+}
+
+.hover-app{
+  @apply hover:bg-[#98FB98]
+}
+.bg-app {
+  @apply bg-[#98FB98]
+}
+.border-app {
+  @apply border-[#2f6154]
+}
+.text-app {
+  @apply text-[#008361]
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
 }

@@ -10,6 +10,7 @@ export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
   isFormModal?: boolean;
   isLoading?: boolean;
   contentContainerClassName?: string;
+  childrenClassName?: string;
   title?: string | JSX.Element;
   onClose: VoidFunction;
   onConfirm?: VoidFunction;

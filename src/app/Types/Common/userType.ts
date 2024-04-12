@@ -1,23 +1,23 @@
 import { DataStatusEnum } from "@enums/commonEnum";
 import { UserRoleEnum } from "@enums/userEnum";
 
-import { Nullable } from "./commonType";
+import { BaseDataType, Nullable } from "./commonType";
 
 export interface UserRoleDataType {
-  id: number;
-  name: string;
-  slug: UserRoleEnum;
+  uuid: number;
+  name: UserRoleEnum;
 }
 
-export interface UserDataType {
-  id: number;
-  fullName: string;
+export interface UserRoleFormDataType extends Nullable<Partial<UserDataType>> {}
+
+export interface UserDataType extends BaseDataType {
+  name: string;
   email: string;
-  phone: string;
+  username: string;
   role: UserRoleDataType;
-  avatar?: string;
+  role_uuid?: number;
   status: DataStatusEnum;
-  createdAt?: string;
+  email_verified_at: Date;
 }
 
 export interface UserFormDataType extends Nullable<Partial<UserDataType>> {

@@ -1,6 +1,4 @@
 import { AUTH_API_PATH } from "@constants/index";
-import { DataStatusEnum } from "@enums/commonEnum";
-import { UserRoleEnum } from "@enums/userEnum";
 import {
   AuthLoginFormDataType,
   AuthRegisterFormDataType,
@@ -8,63 +6,39 @@ import {
   AuthTokenType,
   UserDataType,
 } from "@interfaces/Common";
-import { Axios } from "@utils/index";
+import { axiosInstance } from "@utils/index";
 
-const fakeUserData: UserDataType = {
-  id: 0,
-  email: "encacap_0@gmail.com",
-  phone: "0123456780",
-  fullName: "Trần Văn E",
-  avatar: "https://i.pinimg.com/474x/68/f0/93/68f093dd88a7753a738075954abfb101.jpg",
-  role: {
-    id: 1,
-    name: UserRoleEnum.USER,
-    slug: UserRoleEnum.USER,
-  },
-  status: DataStatusEnum.ACTIVATED,
-};
+// const fakeUserData: UserDataType = {
+//   id: 0,
+//   email: "encacap_0@gmail.com",
+//   phone: "0123456780",
+//   fullName: "Trần Văn E",
+//   avatar: "https://i.pinimg.com/474x/68/f0/93/68f093dd88a7753a738075954abfb101.jpg",
+//   role: {
+//     id: 1,
+//     name: UserRoleEnum.USER,
+//     slug: UserRoleEnum.USER,
+//   },
+//   status: DataStatusEnum.ACTIVATED,
+// };
 
 const getMe = async (isRedirectWhenError?: boolean): Promise<UserDataType> => {
   // eslint-disable-next-line no-console
   console.log("getMe", isRedirectWhenError);
 
-  // const response = await Axios.instance.get(AUTH_API_PATH.ME, {
-  //   params: {
-  //     expand: ["role", "city", "country"],
-  //   },
-  //   redirectWhenError: isRedirectWhenError,
-  // });
-
-  // return response.data.data;
-
-  return Promise.resolve(fakeUserData);
+  const response = await axiosInstance.get(AUTH_API_PATH.ME);
+  return response.data.data;
 };
 
-const loginWithEmailAndPassword = async (data: AuthLoginFormDataType) =>
-  new Promise<UserDataType>((resolve) => {
-    setTimeout(() => {
-      resolve({ ...fakeUserData, email: data.email });
-    }, 1000);
-  });
+const loginWithEmailAndPassword = async (data: AuthLoginFormDataType) => {
+  const response = await axiosInstance.post(AUTH_API_PATH.LOGIN, data);
+  return response.data.data;
+};
 
-const register = async (data: AuthRegisterFormDataType) =>
-  new Promise<UserDataType>((resolve) => {
-    setTimeout(
-      () =>
-        resolve({
-          ...data,
-          id: 1,
-          fullName: data.firstName.concat(" ", data.lastName),
-          role: {
-            id: 2,
-            name: UserRoleEnum.USER,
-            slug: UserRoleEnum.USER,
-          },
-          status: DataStatusEnum.ACTIVATED,
-        }),
-      1000,
-    );
-  });
+const register = async (data: AuthRegisterFormDataType) => {
+  const response = await axiosInstance.post(AUTH_API_PATH.REGISTER, data);
+  return response;
+};
 
 const forgetPassword = async (email: string) =>
   new Promise((resolve) => {
@@ -113,7 +87,7 @@ const getAccessToken = () => {
     return null;
   }
 
-  return authToken.accessToken;
+  return authToken.token;
 };
 
 const getRefreshToken = () => {
@@ -123,11 +97,11 @@ const getRefreshToken = () => {
     return null;
   }
 
-  return authToken.refreshToken;
+  return authToken.token;
 };
 
 const refreshAccessToken = async (refreshToken: string) => {
-  const response = await Axios.instance.post(
+  const response = await axiosInstance.post(
     AUTH_API_PATH.REFRESH_TOKEN,
     {
       refreshToken,

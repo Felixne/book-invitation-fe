@@ -1,34 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NOT_FOUND, UNAUTHORIZED } from "http-status";
 import { memo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 import { Alert } from "@components/Alert";
 import { Button } from "@components/Button";
 import { Input } from "@components/Form";
 import { AUTH_CODE } from "@constants/codeConstant";
 import { AUTH_PATH } from "@constants/routeConstant";
-import useDispatch from "@hooks/useDispatch";
 import useDocumentTitle from "@hooks/useDocumentTitle";
 import { AuthFormGeneralError, AuthLoginFormDataType } from "@interfaces/Common";
 import { authService } from "@services/index";
-import { setUser } from "@slices/commonSlice";
+import { setAuthToken } from "@services/Common/authService";
 
 import AuthFormContainer from "../Components/AuthFormContainer";
 import { loginFormSchema } from "../Schemas/LoginFormSchema";
-import { generateAuthRedirectURL } from "../Utils/GenerateAuthRedirectURL";
 import LoginFormFooter from "./Components/LoginFormFooter";
 
 const Login = () => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);
   const [searchParams] = useSearchParams();
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -42,41 +38,37 @@ const Login = () => {
 
   const email = watch("email");
 
-  const handleSubmit = useFormSubmit((formData) => {
+  const handleSubmit = useFormSubmit(async (formData) => {
     setIsSubmitting(true);
+    try {
+      const userData = await authService.loginWithEmailAndPassword(formData);
+      setAuthToken({ token: userData.token });
+      navigate("/");
+    } catch (error) {
+      if (!isEmpty(error)) {
+        setGeneralError(error as AuthFormGeneralError);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
 
-    authService
-      .loginWithEmailAndPassword(formData)
-      .then((userData) => {
-        // const { accessToken, refreshToken, data: userData } = response;
-        const redirectURL = generateAuthRedirectURL([userData.role.slug], searchParams.get("redirect"));
-
-        // setAuthToken({ accessToken, refreshToken });
-        dispatch(setUser(userData));
-
-        navigate(redirectURL);
-      })
-      .catch((err) => {
-        const { status, message } = err.response.data;
-        if (status === UNAUTHORIZED) {
-          setGeneralError({
-            code: AUTH_CODE.ACCOUNT_INCORRECT,
-            message,
-          });
-          return;
-        }
-        if (status === NOT_FOUND) {
-          setGeneralError({
-            code: AUTH_CODE.ACCOUNT_NOT_EXISTS,
-            message,
-          });
-          return;
-        }
-        setGeneralError({ ...err });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    // authService
+    //   .loginWithEmailAndPassword(formData)
+    //   .then((userData) => {
+    //     const { token } = userData.data;
+    //     console.log(token);
+    //     // const redirectURL = generateAuthRedirectURL([userData.role.name], searchParams.get("redirect"));
+    //     // setAuthToken(token);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     if (err) {
+    //       setGeneralError({ ...err });
+    //     }
+    //   })
+    //   .finally(() => {
+    //     setIsSubmitting(false);
+    //   });
   });
 
   useDocumentTitle(t("login"));

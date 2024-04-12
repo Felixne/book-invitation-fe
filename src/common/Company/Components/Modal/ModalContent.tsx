@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
+import { twMerge } from "tailwind-merge";
 
 import { Button } from "../Button";
 
@@ -10,6 +11,8 @@ export interface ModalContentProps extends Omit<React.HTMLAttributes<HTMLDivElem
   isAllowSubmit?: boolean;
   isLoading?: boolean;
   title?: string | JSX.Element;
+  isFormModal?: boolean;
+  childrenClassName?: string;
   onClose: VoidFunction;
 }
 
@@ -18,15 +21,18 @@ const ModalContent = ({
   isShowFooter = true,
   isAllowSubmit = true,
   isLoading = false,
+  isFormModal = false,
+  childrenClassName,
+  className,
   title,
   children,
   onClose,
 }: ModalContentProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   return (
     <>
-      <div className="px-10">
+      <div className={twMerge("px-10", !isFormModal && "px-0", className)}>
         {isShowHeader && (
           <div>
             <div className="flex items-center justify-between">
@@ -43,7 +49,7 @@ const ModalContent = ({
             <div className="mt-2 h-1 w-16 rounded-md bg-gray-100" />
           </div>
         )}
-        <div className="pb-8 pt-8">{children}</div>
+        <div className={twMerge("pb-8 pt-8 w-96 flex gap-6 flex-wrap", childrenClassName)}>{children}</div>
       </div>
       {isShowFooter && (
         <div className="flex items-center justify-end space-x-6 rounded-b-lg bg-gray-50 px-10 py-6">

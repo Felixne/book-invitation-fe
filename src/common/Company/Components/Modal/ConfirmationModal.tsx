@@ -25,7 +25,7 @@ const ConfirmationModal = ({
   onClose,
   ...props
 }: ConfirmationModalProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmError, setConfirmError] = useState<string | null>(null);
@@ -96,11 +96,11 @@ const ConfirmationModal = ({
       isOpen={isOpen}
       isShowHeader={false}
       isShowFooter={false}
-      contentContainerClassName="max-w-md"
+      childrenClassName="w-128"
       onClose={onClose}
       {...props}
     >
-      <div className="-mx-10 -my-0 pl-8 pr-2 sm:flex sm:items-start">
+      <div className=" -my-0 pl-8 pr-2 sm:flex sm:items-start">
         <div
           className={twMerge(
             className,
@@ -122,7 +122,7 @@ const ConfirmationModal = ({
           )}
         </div>
       </div>
-      <div className="-mx-10 -mb-8 mt-9 flex items-center justify-end space-x-4 rounded-b-lg bg-gray-50 px-8 py-6">
+      <div className="-mb-8  w-full mt-9 flex items-center justify-end space-x-4 rounded-b-lg bg-gray-50 px-8 py-6">
         {isShowCancelButton && (
           <Button
             type="button"

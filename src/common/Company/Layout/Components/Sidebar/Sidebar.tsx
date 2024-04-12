@@ -26,20 +26,16 @@ import {
 } from "@slices/commonSlice";
 import { getTwScreenWidth } from "@utils/Helpers/commonHelper";
 
-import SidebarLink from "./Link/Link";
-
 interface LayoutSidebarProps extends BaseLayoutSidebarProps {
   children?: ReactElement[] | ReactElement;
   id: string;
   type?: LayoutSidebarTypeEnum;
-  sidebarLinkClassName?: string;
 }
 
 const LayoutSidebar = ({
   children,
   className,
   containerClassName,
-  sidebarLinkClassName,
   defaultCollapsedPaths,
   defaultOpeningGroups,
   type = LayoutSidebarTypeEnum.GITLAB,
@@ -212,7 +208,6 @@ const LayoutSidebar = ({
                 onOpen: handleOpenSidebarGroup,
               }),
             )}
-          <SidebarLink className={sidebarLinkClassName} />
         </div>
       </div>
       <div

@@ -11,7 +11,7 @@ interface HeaderUserDropdownItemProps {
 }
 
 const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
-  const { t } = useTranslation("company");
+  const { t } = useTranslation();
 
   const user = useSelector((state) => state.common.user);
 
@@ -41,7 +41,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
       <div className="group flex w-full cursor-pointer" role="button" tabIndex={0} onClick={onClick}>
         <div className="mb-3 h-full w-full border-b-2 border-gray-100 pb-4 text-sm">
           <Link to="profile" className="font-semibold group-hover:text-primary-500">
-            {user?.fullName}
+            {user?.name}
           </Link>
           <Link to="profile" className="mt-1 line-clamp-1 break-all text-sm group-hover:text-primary-500">
             {user?.email}
@@ -49,18 +49,18 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         </div>
       </div>
       <div
-        className="mt-1 flex w-full items-center hover:text-red-600"
+        className="mt-1 flex w-full items-center hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={onClick}
       >
         <FiSettings />
         <p className="ml-3 text-sm">
-          <Link to="dashboard">{t("dashboard")}</Link>
+          <Link to="/admin/dashboard">{t("dashboard")}</Link>
         </p>
       </div>
       <div
-        className="mt-2 flex w-full items-center hover:text-red-600"
+        className="mt-2 flex w-full items-center hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={onClick}
@@ -71,7 +71,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         </Link>
       </div>
       <div
-        className="mt-4 flex w-full items-center border-t-2 border-gray-100 pt-3 hover:text-red-600"
+        className="mt-4 flex w-full items-center border-t-2 border-gray-100 pt-3 hover:text-primary-600"
         role="button"
         tabIndex={0}
         onClick={handleClickLogout}

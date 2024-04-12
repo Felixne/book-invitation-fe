@@ -1,8 +1,6 @@
 export enum ConfigTypeEnum {
-  NUMBER = "number",
-  STRING = "string",
-  BOOLEAN = "boolean",
-  IMAGE = "image",
+  SYSTEM = "system",
+  PUBLIC = "public",
 }
 
 export enum ConfigKeyEnum {

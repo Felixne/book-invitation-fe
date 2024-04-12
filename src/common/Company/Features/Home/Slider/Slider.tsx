@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 
 const Slider = () => {
   return (
-    <div className="w-full h-120">
+    <div className="w-full xs:h-60 md:h-120">
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -19,28 +19,28 @@ const Slider = () => {
       >
         <SwiperSlide>
           <img
-            className="w-full h-120 object-cover"
+            className="w-full xs:h-60 md:h-120 object-cover"
             alt="de-mairiage"
             src="https://thietkekhainguyen.com/wp-content/uploads/2022/10/thiep-cuoi-trong-suot-788x445.jpg"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-120 object-cover"
+            className="w-full xs:h-60 md:h-120 object-cover"
             alt="de-mairiage"
             src="https://lacoweddingpaper.com/wp-content/uploads/2023/03/1-03-scaled.jpg"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-120 object-cover"
+            className="w-full xs:h-60 md:h-120 object-cover"
             alt="de-mairiage"
             src="https://thietkekhainguyen.com/wp-content/uploads/2022/10/thiep-cuoi-trong-suot-788x445.jpg"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-120 object-cover"
+            className="w-full xs:h-60 md:h-120 object-cover"
             alt="de-mairiage"
             src="https://lacoweddingpaper.com/wp-content/uploads/2023/03/1-03-scaled.jpg"
           />

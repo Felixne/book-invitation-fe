@@ -13,7 +13,7 @@ interface NavigateOptions extends BaseNavigateOptions {
  */
 const useUserNavigate = () => {
   const user = useSelector((state) => state.common.user);
-  const userRoleSlug = useMemo(() => user?.role?.slug, [user]);
+  const userRoleSlug = useMemo(() => user?.role?.name, [user]);
 
   const navigate = useNavigate();
 
