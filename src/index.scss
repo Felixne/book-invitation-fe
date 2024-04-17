@@ -129,18 +129,6 @@ body {
   }
 }
 
-.hover-app{
-  @apply hover:bg-[#98FB98]
-}
-.bg-app {
-  @apply bg-[#98FB98]
-}
-.border-app {
-  @apply border-[#2f6154]
-}
-.text-app {
-  @apply text-[#008361]
-}
 
 .hidden-scrollbar::-webkit-scrollbar {
   display: none;

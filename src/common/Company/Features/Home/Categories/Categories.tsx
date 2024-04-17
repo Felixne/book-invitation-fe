@@ -8,7 +8,11 @@ import { LoadingSkeleton } from "@components/Loading";
 
 import CategoryItem from "./CategoryItem";
 
-const Categories = () => {
+interface CategoriesProps {
+  onChangeFilter: (category: string) => void;
+}
+
+const Categories = ({ onChangeFilter }: CategoriesProps) => {
   const [categories, setCategories] = useState<CategoryDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
@@ -18,7 +22,7 @@ const Categories = () => {
     setIsLoading(true);
     try {
       const { data } = await getCaterories();
-      setCategories(data);
+      setCategories([{ uuid: 5, name: "All", description: "all" }, ...data]);
     } catch (error) {
       toast.error(t("unknown"));
     } finally {
@@ -32,7 +36,10 @@ const Categories = () => {
 
   return (
     <div className="w-full h-fit xs:px-6 md:px-20 xl:px-40 my-8 xs:flex xs:overflow-x-scroll hidden-scrollbar md:overflow-auto md:grid md:grid-cols-5 xs:gap-x-4 md:gap-x-6  ">
-      {!isLoading && categories.map((item) => <CategoryItem key={item.uuid} name={item.name} />)}
+      {!isLoading &&
+        categories.map((item) => (
+          <CategoryItem key={item.uuid} name={item.name} onChangeFilter={onChangeFilter} />
+        ))}
       {isLoading &&
         Array.from({ length: 5 }).map((_1, index) => (
           <LoadingSkeleton

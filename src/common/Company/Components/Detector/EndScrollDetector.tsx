@@ -11,9 +11,6 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { ConfigKeyEnum } from "@enums/configEnum";
-import { useConfig } from "@hooks/index";
-
 import { Container } from "../Container";
 import { EndScrollDetectorProps, EndScrollDetectorRefType } from "./interface";
 
@@ -21,12 +18,8 @@ const EndScrollDetector = (
   { as, contentContainerRef, children, isShown, isTriggerEarly, onReach }: EndScrollDetectorProps,
   ref: ForwardedRef<EndScrollDetectorRefType>,
 ) => {
-  const config = useConfig();
-
   const scrollEndScrollDetectorRef = useRef<HTMLDivElement>(null);
-  const scrollHeightPercentage = useRef(
-    Number(config(ConfigKeyEnum.PAGINATION_TRIGGER_PERCENT)) / 100 ?? 0.5,
-  );
+  const scrollHeightPercentage = useRef(70 / 100 ?? 0.5);
 
   const [firstChild, otherChildren] = useMemo(() => {
     if (!children) {

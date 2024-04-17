@@ -8,6 +8,7 @@ import { useSelector } from "../../../Hooks";
 import HeaderUserDropdown from "./HeaderUserDropdown";
 import HeaderLoginButton from "./LoginButton";
 import LayoutHeaderNavbar from "./Navbar";
+import HeaderCard from "./HeaderCart";
 
 interface LayoutHeaderProps {
   prefix?: ReactNode;
@@ -29,7 +30,14 @@ const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
           <LayoutHeaderNavbar />
         </div>
         <div className="flex h-full w-fit items-center space-x-6">
-          {_.isEmpty(user) ? <HeaderLoginButton /> : <HeaderUserDropdown />}
+          {_.isEmpty(user) ? (
+            <HeaderLoginButton />
+          ) : (
+            <>
+              <HeaderCard />
+              <HeaderUserDropdown />
+            </>
+          )}
         </div>
       </div>
     </div>

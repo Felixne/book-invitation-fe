@@ -2,6 +2,7 @@ import _, { isNull } from "lodash";
 import { lazy, memo, useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { Route, Routes, matchPath, useNavigate } from "react-router-dom";
 import ProductRoutes from "src/features/Product/ProductRoutes";
+import OrderPage from "src/features/Order/OrderPage";
 
 import { ErrorRoutes } from "@features/Error";
 import useDispatch from "@hooks/useDispatch";
@@ -83,6 +84,7 @@ const CommonRoutes = () => {
       <Route path="auth/*" element={<AuthRoutes />} />
       <Route path="error/*" element={<ErrorRoutes />} />
       <Route path="product/*" element={<ProductRoutes />} />
+      <Route path="order" element={<OrderPage />} />
     </Routes>
   );
 };

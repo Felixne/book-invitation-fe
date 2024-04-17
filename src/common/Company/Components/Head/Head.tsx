@@ -8,7 +8,7 @@ import { BASE_MANIFEST } from "./constant";
 
 const Head = () => {
   const config = useConfig();
-  const faviconConfig = useMemo(() => config(ConfigKeyEnum.LOGO_ICON), [config]);
+  const faviconConfig = useMemo(() => config(ConfigKeyEnum.LOGO), [config]);
   const appName = useMemo(() => config(ConfigKeyEnum.APP_NAME), [config]);
 
   const manifest = useMemo(() => {

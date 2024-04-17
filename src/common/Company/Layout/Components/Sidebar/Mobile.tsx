@@ -1,5 +1,5 @@
 import { cloneElement, memo, ReactElement, useCallback, useRef, useState } from "react";
-import { HiMenuAlt1 } from "react-icons/hi";
+import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { twMerge } from "tailwind-merge";
 import { useOnClickOutside } from "usehooks-ts";
@@ -32,7 +32,7 @@ const LayoutSidebarMobile = ({ sidebar }: LayoutSidebarMobileProps) => {
         )}
         onClick={handleToggle}
       >
-        {!isShowOverlay && <HiMenuAlt1 size={24} />}
+        {!isShowOverlay && <AiOutlineMenu size={24} />}
         {isShowOverlay && <IoMdClose size={24} />}
       </button>
       <div

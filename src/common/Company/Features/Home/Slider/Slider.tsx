@@ -1,10 +1,15 @@
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/pagination";
+import { isEmpty } from "lodash";
+
+import useSelector from "@hooks/useSelector";
+import { commonSelector } from "@selectors/index";
+import { LoadingSkeleton } from "@components/Loading";
 
 const Slider = () => {
+  const sliderConfigValue = useSelector(commonSelector.homeSliderSelector);
   return (
     <div className="w-full xs:h-60 md:h-120">
       <Swiper
@@ -17,34 +22,16 @@ const Slider = () => {
         }}
         modules={[Autoplay, Pagination]}
       >
-        <SwiperSlide>
-          <img
-            className="w-full xs:h-60 md:h-120 object-cover"
-            alt="de-mairiage"
-            src="https://thietkekhainguyen.com/wp-content/uploads/2022/10/thiep-cuoi-trong-suot-788x445.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="w-full xs:h-60 md:h-120 object-cover"
-            alt="de-mairiage"
-            src="https://lacoweddingpaper.com/wp-content/uploads/2023/03/1-03-scaled.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="w-full xs:h-60 md:h-120 object-cover"
-            alt="de-mairiage"
-            src="https://thietkekhainguyen.com/wp-content/uploads/2022/10/thiep-cuoi-trong-suot-788x445.jpg"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="w-full xs:h-60 md:h-120 object-cover"
-            alt="de-mairiage"
-            src="https://lacoweddingpaper.com/wp-content/uploads/2023/03/1-03-scaled.jpg"
-          />
-        </SwiperSlide>
+        {isEmpty(sliderConfigValue) ? (
+          <LoadingSkeleton className="w-full xs:h-60 md:h-120" />
+        ) : (
+          sliderConfigValue?.map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <SwiperSlide key={index}>
+              <img className="w-full xs:h-60 md:h-120 object-cover" alt="de-mairiage" src={item} />
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </div>
   );

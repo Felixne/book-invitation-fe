@@ -27,6 +27,13 @@ const ProductDetail = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <div className="w-full h-fit xs:p-6 md:p- lg:p-20 ">
       <div className="w-full grid grid-cols-2 h-fit xs:gap-x-0 md:gap-x-6 lg:gap-x-0">

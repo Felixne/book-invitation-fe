@@ -10,10 +10,20 @@ const SidebarMobileGuest = () => {
   const { t } = useTranslation();
   return (
     <LayoutSidebar id="guestSidebar" className="w-full pt-0" containerClassName="w-screen">
-      <LayoutSidebarItem id="product" text={t("product")} to={HOME_PATH.PRODUCT} />
-      <LayoutSidebarItem id="card" text={t("card")} to={HOME_PATH.DESIGN} />
-      <LayoutSidebarItem id="blogs" text={t("blogs")} to={HOME_PATH.BLOGS} />
-      <LayoutSidebarItem id="contact" text={t("contact")} to={HOME_PATH.CONTACT} />
+      <LayoutSidebarItem
+        id="product"
+        text={t("product")}
+        to={HOME_PATH.PRODUCT}
+        containerClassName="xs:px-2"
+      />
+      <LayoutSidebarItem id="card" text={t("card")} to={HOME_PATH.DESIGN} containerClassName="xs:px-2" />
+      <LayoutSidebarItem id="blogs" text={t("blogs")} to={HOME_PATH.BLOGS} containerClassName="xs:px-2" />
+      <LayoutSidebarItem
+        id="contact"
+        text={t("contact")}
+        to={HOME_PATH.CONTACT}
+        containerClassName="xs:px-2"
+      />
     </LayoutSidebar>
   );
 };

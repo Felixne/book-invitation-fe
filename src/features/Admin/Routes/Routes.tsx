@@ -7,6 +7,8 @@ import AdminUserManagement from "../User/User";
 import AdminSidebar from "../AdminSidebar";
 import AdminCategoryManagement from "../Category/Category";
 import AdminProductManagement from "../Product/Product";
+import AdminRoleManagement from "../Role/Role";
+import AdminConfigManagement from "../Config/Config";
 
 const AdminRoutes = () => {
   return (
@@ -19,6 +21,8 @@ const AdminRoutes = () => {
         <Route path="product" element={<AdminProductManagement />} />
         <Route path="user" element={<AdminUserManagement />} />
         <Route path="category" element={<AdminCategoryManagement />} />
+        <Route path="role" element={<AdminRoleManagement />} />
+        <Route path="config" element={<AdminConfigManagement />} />
       </Routes>
     </LayoutContainer>
   );
