@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@components/Button";
@@ -6,10 +6,16 @@ import { ProductDataType } from "@interfaces/Common/productType";
 import { getProducts } from "@services/App/productService";
 import useToast from "@hooks/useToast";
 import { LoadingSkeleton } from "@components/Loading";
+import { BaseListQueryType } from "@interfaces/Common";
 
 import ProductItem from "./ProductItem";
 
-const Product = () => {
+interface ProductProps {
+  queryParams?: BaseListQueryType | null;
+  setQueryParams?: Dispatch<SetStateAction<BaseListQueryType | null>>;
+}
+
+const Product = ({ queryParams, setQueryParams }: ProductProps) => {
   const [productData, setProductData] = useState<ProductDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
@@ -17,14 +23,20 @@ const Product = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data } = await getProducts();
+      const { data } = await getProducts(queryParams || {});
       setProductData(data);
     } catch (error) {
       toast.error(t("unknown"));
     } finally {
       setIsLoading(false);
     }
-  }, [toast, t]);
+  }, [toast, t, queryParams]);
+
+  const handleSetParams = useCallback(() => {
+    if (!setQueryParams) return;
+    setQueryParams((prev) => ({ ...prev, pageSize: 99 }));
+  }, [setQueryParams]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -43,7 +55,7 @@ const Product = () => {
       </div>
       <div className="w-full py-8 flex justify-center items-center">
         <div className="xs:w-40 md:w-48 h-10">
-          <Button color="primary" className="w-full h-full">
+          <Button isLoading={isLoading} onClick={handleSetParams} color="primary" className="w-full h-full">
             {t("loadMore")}
           </Button>
         </div>

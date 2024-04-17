@@ -15,10 +15,12 @@ export interface LayoutSidebarItemProps {
   text: string;
   textColor?: string;
   className?: string;
+  containerClassName?: string;
 }
 
 const LayoutSidebarItem = ({
   className,
+  containerClassName,
   id,
   icon,
   isChild = false,
@@ -71,6 +73,7 @@ const LayoutSidebarItem = ({
           isCollapsed && isSEM && "flex-col justify-center pt-4 text-center md:px-2",
           isCollapsed && isGitlab && !isChild && "h-10 w-full items-center justify-start md:px-2.5 md:py-0",
           isChild && "md:py-2 md:pl-3 md:pr-4",
+          containerClassName,
         )}
         data-tooltip-id={id}
         data-tooltip-content={text}

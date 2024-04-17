@@ -61,6 +61,9 @@ module.exports = {
         160: "40rem",
         "fit-layout": "calc(100% - 288px)",
       },
+      minWidth: {
+        4:"1rem",
+      },
       boxShadow: {
         ...defaultTheme.boxShadow,
         xl: "0px 5px 14px 0px rgba(100, 100, 111, 0.2)",

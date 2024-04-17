@@ -48,9 +48,17 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
         id: "name",
         header: t("name"),
       }),
+      columnHelper.accessor((row) => row.price, {
+        id: "price",
+        header: t("price"),
+      }),
       columnHelper.accessor((row) => row.description, {
         id: "description",
         header: t("description"),
+      }),
+      columnHelper.accessor((row) => row.category.name, {
+        id: "category.name",
+        header: t("category"),
       }),
       columnHelper.display({
         id: "actions",
