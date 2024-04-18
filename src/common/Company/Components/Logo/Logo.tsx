@@ -16,7 +16,10 @@ const Logo = ({ className, imageClassName }: LogoProps) => {
     <div className={className}>
       {!logoConfigValue && (
         <div
-          className={twMerge("inline-flex h-12 w-40 animate-pulse rounded-none bg-gray-100", imageClassName)}
+          className={twMerge(
+            "inline-flex h-12 xs:w-28 md:w-40 animate-pulse rounded-none bg-gray-100",
+            imageClassName,
+          )}
         />
       )}
       {logoConfigValue && <img src={logoConfigValue} alt={appNameConfigValue} className={imageClassName} />}

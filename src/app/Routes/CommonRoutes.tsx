@@ -53,7 +53,9 @@ const CommonRoutes = () => {
 
     if (_.isEmpty(user)) {
       authService
-        .getMe(false)
+        .getMe(false, {
+          expand: ["user__role_uuid"],
+        })
         .then((data) => {
           return dispatch(setUser(data));
         })
