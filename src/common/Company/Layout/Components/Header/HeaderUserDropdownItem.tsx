@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import useSelector from "@hooks/useSelector";
 import { authService } from "@services/index";
+import { userRoleSelector } from "@selectors/commonSelector";
 
 interface HeaderUserDropdownItemProps {
   onClick?: () => void;
@@ -14,6 +15,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
   const { t } = useTranslation();
 
   const user = useSelector((state) => state.common.user);
+  const { isAdmin } = useSelector(userRoleSelector);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -48,17 +50,19 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
           </Link>
         </div>
       </div>
-      <div
-        className="mt-1 flex w-full items-center hover:text-primary-600"
-        role="button"
-        tabIndex={0}
-        onClick={onClick}
-      >
-        <FiSettings />
-        <p className="ml-3 text-sm">
-          <Link to="/admin/dashboard">{t("dashboard")}</Link>
-        </p>
-      </div>
+      {isAdmin && (
+        <div
+          className="mt-1 flex w-full items-center hover:text-primary-600"
+          role="button"
+          tabIndex={0}
+          onClick={onClick}
+        >
+          <FiSettings />
+          <p className="ml-3 text-sm">
+            <Link to="/admin/dashboard">{t("dashboard")}</Link>
+          </p>
+        </div>
+      )}
       <div
         className="mt-2 flex w-full items-center hover:text-primary-600"
         role="button"

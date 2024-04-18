@@ -115,7 +115,7 @@ const UncontrolledInputSkeleton = (
       >
         <div
           className={twMerge(
-            "z-10 flex items-center transition-all",
+            "z-5 flex items-center transition-all",
             textColor,
             sizeClassNames.label,
             (isFocusing || isAvailableValue) &&

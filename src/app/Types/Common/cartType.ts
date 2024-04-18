@@ -1,4 +1,4 @@
-import { BaseDataType } from "./commonType";
+import { BaseDataType, Nullable } from "./commonType";
 import { ProductDataType } from "./productType";
 
 export interface CartDataType {
@@ -6,9 +6,7 @@ export interface CartDataType {
   quantity: number;
 }
 
-export interface CartFormDataType {
-  product: Array<CartDataType>;
-}
+export interface CartFormDataType extends Nullable<Partial<CartDataType>> {}
 
 export interface ProductInCartDataType {
   uuid: number;

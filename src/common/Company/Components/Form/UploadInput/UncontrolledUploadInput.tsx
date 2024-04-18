@@ -151,7 +151,7 @@ const UncontrolledUploadInput = ({
     >
       <div
         className={twMerge(
-          "absolute left-2 top-1.5 z-50 -mt-0.5 flex -translate-y-4 items-center justify-between bg-white px-2 text-sm font-semibold text-blue-500 transition-all duration-100",
+          "absolute left-2 top-1.5 z-5 -mt-0.5 flex -translate-y-4 items-center justify-between bg-white px-2 text-sm font-semibold text-blue-500 transition-all duration-100",
           disabled && "text-gray-400",
         )}
       >

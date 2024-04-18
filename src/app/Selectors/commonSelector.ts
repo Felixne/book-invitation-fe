@@ -15,6 +15,11 @@ export const appNameConfigSelector = createSelector(
   (appName) => appName?.value ?? process.env.REACT_APP_NAME,
 );
 
+export const homeSliderSelector = createSelector(
+  (state: RootState) => state.common.configs.find((config) => config.key === ConfigKeyEnum.IMAGE_HEADER_HOME),
+  (config) => config?.value.split(","),
+);
+
 export const configSelector = createSelector(
   (state: RootState) => state.common.configs,
   (config) =>

@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useMemo } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
 import useSelector from "@hooks/useSelector";
 import useToast from "@hooks/useToast";
@@ -38,7 +39,13 @@ const HeaderCart = () => {
     <Link to="order">
       <div className="text-2xl relative text-slate-700 group hover:text-primary-500">
         <MdOutlineShoppingCart />
-        <div className="w-4 h-4 absolute group-hover:border-primary-500 font-semibold text-xs -top-1 -right-1 bg-white border-slate-700 flex items-center justify-center rounded-full border-2">
+        <div
+          className={twMerge(
+            "min-w-4 px-1 h-4 absolute group-hover:border-primary-500 font-semibold text-xs -top-1 -right-1 bg-white border-slate-700 flex items-center justify-center rounded-full border-2",
+            cartQuantity > 9 && "-right-2",
+            cartQuantity > 99 && "-right-4",
+          )}
+        >
           {cartQuantity || 0}
         </div>
       </div>

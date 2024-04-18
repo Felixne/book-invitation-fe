@@ -1,15 +1,17 @@
 import { AxiosError } from "axios";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { Input } from "@components/Form";
+import { Input, Select } from "@components/Form";
 import UploadInput from "@components/Form/UploadInput/UploadInput";
 import { Modal } from "@components/Modal";
 import { ModalProps } from "@components/Modal/interface";
 import useToast from "@hooks/useToast";
 import { setFormError } from "@utils/Helpers/errorHelper";
 import { ProductDataType, ProductFormDataType } from "@interfaces/Common/productType";
+import { getCaterories } from "@services/App/categoryService";
+import { CategoryDataType } from "@interfaces/Common/categoryType";
 
 interface AdminProductModificationModalProps extends ModalProps {
   product: ProductDataType | null;
@@ -41,6 +43,8 @@ const AdminProductModificationModal = ({
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categoryData, setCategoryData] = useState<CategoryDataType[]>([]);
 
   const handleUnknownError = useCallback(() => {
     toast.error(t("unknown"));
@@ -105,6 +109,15 @@ const AdminProductModificationModal = ({
     handleEditProduct(formData);
   });
 
+  const fetchData = useCallback(async () => {
+    try {
+      const { data } = await getCaterories();
+      setCategoryData(data);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -119,6 +132,15 @@ const AdminProductModificationModal = ({
 
     reset(DEFAULT_VALUE);
   }, [isOpen, reset, product]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const categoryOption = useMemo(
+    () => categoryData.map((item) => ({ value: item.uuid, label: item.name })),
+    [categoryData],
+  );
 
   return (
     <Modal
@@ -150,6 +172,13 @@ const AdminProductModificationModal = ({
         disabled={isSubmitting}
         label={t("price")}
         name="price"
+      />
+      <Select
+        isDisabled={isLoading}
+        name="category_uuid"
+        className="w-full"
+        control={control}
+        options={categoryOption}
       />
       <UploadInput
         containerClassName="w-full"

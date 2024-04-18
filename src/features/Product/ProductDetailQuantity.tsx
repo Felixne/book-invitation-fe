@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@components/Button";
 import useDispatch from "@hooks/useDispatch";
@@ -16,8 +17,9 @@ interface ProductDetailQuantityProps {
 
 const ProductDetailQuantity = ({ product }: ProductDetailQuantityProps) => {
   const { t } = useTranslation();
-  const { cart } = useSelector((state) => state.common);
+  const { user } = useSelector((state) => state.common);
   const [quantity, setQuantity] = useState(0);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -37,15 +39,19 @@ const ProductDetailQuantity = ({ product }: ProductDetailQuantityProps) => {
   }, [product, dispatch, quantity]);
 
   const handleClickAddToCart = useCallback(async () => {
+    if (!user) {
+      navigate("/auth/login");
+    }
+    if (!product) return;
     try {
-      await addCart({ product: cart });
+      await addCart({ product_uuid: product.uuid, quantity });
       toast.success(t("addToCartSuccessfully"));
     } catch {
       toast.error(t("unknown"));
     } finally {
       setQuantity(0);
     }
-  }, [cart, toast, t]);
+  }, [product, quantity, user, toast, t, navigate]);
   return (
     <div className="w-full h-fit">
       <div className="font-semibold uppercase">{t("quantity")}</div>

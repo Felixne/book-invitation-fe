@@ -52,7 +52,9 @@ const AdminProductManagement = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data, meta: metaData } = await getProducts();
+      const { data, meta: metaData } = await getProducts({
+        expand: ["product__category_uuid"],
+      });
       setProductData(data);
       setMeta(metaData);
     } finally {
