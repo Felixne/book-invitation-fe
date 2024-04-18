@@ -8,6 +8,8 @@ import {
 } from "@interfaces/Common";
 import { axiosInstance } from "@utils/index";
 
+import { BaseListQueryType } from "../../Types/Common/commonType";
+
 // const fakeUserData: UserDataType = {
 //   id: 0,
 //   email: "encacap_0@gmail.com",
@@ -22,11 +24,11 @@ import { axiosInstance } from "@utils/index";
 //   status: DataStatusEnum.ACTIVATED,
 // };
 
-const getMe = async (isRedirectWhenError?: boolean): Promise<UserDataType> => {
+const getMe = async (isRedirectWhenError?: boolean, params?: BaseListQueryType): Promise<UserDataType> => {
   // eslint-disable-next-line no-console
   console.log("getMe", isRedirectWhenError);
 
-  const response = await axiosInstance.get(AUTH_API_PATH.ME);
+  const response = await axiosInstance.get(AUTH_API_PATH.ME, { params });
   return response.data.data;
 };
 
