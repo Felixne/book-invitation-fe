@@ -57,6 +57,7 @@
   "editRole": "Edit Role",
   "editUser": "Edit User",
   "editUserSuccessfully": "The user has been updated successfully.",
+  "editConfigSuccessfully": "The config has been updated successfully.",
   "email": "Email",
   "emailAlreadyExists": "The email {{email}} is already in use. Please use another email.",
   "emailInvalid": "The email is invalid.",

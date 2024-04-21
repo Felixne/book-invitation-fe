@@ -8,11 +8,12 @@ import { ErrorRoutes } from "@features/Error";
 import useDispatch from "@hooks/useDispatch";
 import useSelector from "@hooks/useSelector";
 import { getAuthToken } from "@services/Common/authService";
+import { getCaterories } from "@services/App/categoryService";
 
 import { LoadingOverlay } from "../../common/Company/Components";
 import { AUTH_PATH } from "../Constants";
 import { authService, configService } from "../Services";
-import { setConfig, setUser } from "../Slices/commonSlice";
+import { setCategories, setConfig, setUser } from "../Slices/commonSlice";
 
 const AuthRoutes = lazy(() => import("@auth/Routes/AuthRoutes"));
 const PrivateRoutes = lazy(() => import("./PrivateRoutes"));
@@ -72,9 +73,19 @@ const CommonRoutes = () => {
     }
   }, [dispatch, navigate, excludeGetUserPaths, excludeRedirectPaths, user, token]);
 
+  const fetchCategoriesData = useCallback(async () => {
+    try {
+      const { data } = await getCaterories();
+      dispatch(setCategories(data));
+    } catch {
+      throw new Error();
+    }
+  }, [dispatch]);
+
   useLayoutEffect(() => {
     getPublicConfigs();
-  }, [getPublicConfigs]);
+    fetchCategoriesData();
+  }, [getPublicConfigs, fetchCategoriesData]);
 
   if (isLoading) {
     return <LoadingOverlay />;

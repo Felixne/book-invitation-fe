@@ -38,6 +38,11 @@ const Info = () => {
               <SocialIcon hostname="facebook" size={20} />
             </div>
           </a>
+          <a href={getConfig(ConfigKeyEnum.URL_ADDRESS)} target="_blank" rel="noreferrer">
+            <div className=" flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-gray-100 bg-white text-blue-500 shadow-md duration-200 hover:bg-blue-500 hover:text-white">
+              <SocialIcon hostname="address" size={20} />
+            </div>
+          </a>
         </div>
       </div>
     </div>

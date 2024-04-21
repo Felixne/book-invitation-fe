@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { IconBaseProps } from "react-icons/lib";
+import { MdOutlineLocationOn } from "react-icons/md";
 import { RiSoundcloudLine, RiTelegramLine } from "react-icons/ri";
 
 export interface SocialIconProps extends IconBaseProps {
@@ -30,6 +31,7 @@ const SocialIcon = ({ hostname, children, ...props }: SocialIconProps) => {
     linkedin: <FiLinkedin />,
     whatsapp: <AiOutlineWhatsApp />,
     telegram: <RiTelegramLine />,
+    address: <MdOutlineLocationOn />,
     default: <HiOutlineGlobeAlt />,
   };
 
