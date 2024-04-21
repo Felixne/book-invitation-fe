@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { omit } from "lodash";
 
 import { Input } from "@components/Form";
 import { Modal } from "@components/Modal";
@@ -94,11 +95,10 @@ const AdminCategoryModificationModal = ({
 
     if (!category) {
       handleCreateCategory(formData);
-
       return;
     }
 
-    handleEditCategory(formData);
+    handleEditCategory(omit(formData, "parent_uuid"));
   });
 
   useEffect(() => {

@@ -25,3 +25,8 @@ export enum ImageUploadTypeEnum {
   USER = "user",
   PRODUCT = "product",
 }
+
+export enum DropdownTypeEnum {
+  ABSOLUTE = "absolute",
+  BLOCK = "block",
+}

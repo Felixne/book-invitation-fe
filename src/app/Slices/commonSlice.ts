@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import _, { isEmpty, set } from "lodash";
 
 import { getLocalStorageByKey, setLocalStorageByKey } from "@utils/Helpers/commonHelper";
+import { CategoryDataType } from "@interfaces/Common/categoryType";
 
 import { CartDataType } from "../Types/Common/cartType";
 import { LayoutSidebarTypeEnum } from "../../common/Company/Layout/constant";
@@ -25,6 +26,7 @@ interface CommonGlobalStateType {
   layoutSidebars: GlobalStateLayoutSidebarConfigType[];
   isOpenTimeoutModal: boolean;
   loadingOverlayIds: string[];
+  categories: CategoryDataType[];
 }
 
 const initialState: CommonGlobalStateType = {
@@ -37,6 +39,7 @@ const initialState: CommonGlobalStateType = {
   isOpenTimeoutModal: false,
   loadingOverlayIds: [],
   cart: [],
+  categories: [],
 };
 
 export const commonSlice = createSlice({
@@ -56,6 +59,9 @@ export const commonSlice = createSlice({
     },
     setUser: (state, action: PayloadAction<UserDataType>) => {
       state.user = action.payload;
+    },
+    setCategories: (state, action: PayloadAction<CategoryDataType[]>) => {
+      state.categories = action.payload;
     },
     updateUser: (state, action: PayloadAction<UserDataType>) => {
       state.user = {
@@ -141,6 +147,7 @@ export const {
   setConfig,
   setLanguage,
   setUser,
+  setCategories,
   updateUser,
   updateUserAvatar,
   updateUserCoverImage,

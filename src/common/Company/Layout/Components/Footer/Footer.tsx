@@ -6,7 +6,6 @@ import { ConfigKeyEnum } from "@enums/configEnum";
 
 import { commonSelector } from "../../../../../app/Selectors";
 import { useSelector } from "../../../Hooks";
-import FooterSocialIcon from "./SocialIcon";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -31,7 +30,6 @@ const Footer = () => {
         <div className="text-center md:text-left">
           &copy; {appNameConfigValue} 2024. {t("reserved")}
         </div>
-        <FooterSocialIcon className="mt-4 flex justify-center gap-x-3 md:mt-0 md:justify-start md:gap-x-4" />
       </div>
     </div>
   );

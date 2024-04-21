@@ -2,16 +2,17 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { HOME_PATH, PRODUCT_PATH } from "@constants/routeConstant";
+import { HOME_PATH } from "@constants/routeConstant";
+import { DropdownTypeEnum } from "@enums/commonEnum";
+
+import HeaderNavlinkDropdown from "./HeaderNavlinkDropdown";
 
 const LayoutHeaderNavbar = () => {
   const { t } = useTranslation();
 
   return (
     <div className="ml-12 hidden items-center space-x-8 lg:flex">
-      <Link className="cursor-pointer duration-75 hover:text-primary-700" to={PRODUCT_PATH.PRODUCT}>
-        {t("product")}
-      </Link>
+      <HeaderNavlinkDropdown type={DropdownTypeEnum.ABSOLUTE} />
       <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.CARD}>
         {t("card")}
       </Link>
