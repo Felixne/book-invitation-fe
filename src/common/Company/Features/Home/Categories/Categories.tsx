@@ -19,7 +19,6 @@ const Categories = ({ onChangeFilter }: CategoriesProps) => {
   return (
     <div className="w-full h-fit xs:px-6 md:px-20 xl:px-40 my-8 ">
       <Swiper
-        spaceBetween={50}
         slidesPerView={6}
         pagination={{ clickable: true }}
         autoplay={{
@@ -27,6 +26,20 @@ const Categories = ({ onChangeFilter }: CategoriesProps) => {
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 50,
+          },
+          1248: {
+            slidesPerView: 6,
+            spaceBetween: 50,
+          },
+        }}
       >
         {isEmpty(categories)
           ? Array.from({ length: 5 }).map((_1, index) => (
