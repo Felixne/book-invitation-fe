@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Table from "@components/Table/Table";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { TableProps } from "@components/Table";
-import { ConfigDataType } from "@interfaces/Common";
+import { BaseListQueryType, ConfigDataType, ResponseDataType } from "@interfaces/Common";
 
 import AdminConfigTableRowAction, { AdminConfigTableRowActionProps } from "./TableRowAction";
 
@@ -14,9 +14,18 @@ interface AdminConfigTableProps
     Omit<AdminConfigTableRowActionProps, "id"> {
   data: ConfigDataType[];
   isLoading: boolean;
+  onGetAll: (params?: BaseListQueryType) => Promise<ResponseDataType<ConfigDataType[]>>;
 }
 
-const AdminConfigTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: AdminConfigTableProps) => {
+const AdminConfigTable = ({
+  data,
+  meta,
+  isLoading,
+  onClickEdit,
+  onClickDelete,
+  onGetAll,
+  ...props
+}: AdminConfigTableProps) => {
   const { t } = useTranslation();
 
   const columnHelper = useMemo(() => createColumnHelper<ConfigDataType>(), []);
@@ -30,6 +39,10 @@ const AdminConfigTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }:
       columnHelper.accessor((row) => row.key, {
         id: "key",
         header: t("key"),
+        meta: {
+          filterBy: "key",
+          getFilterOptions: onGetAll,
+        },
       }),
       columnHelper.accessor((row) => row.value, {
         id: "value",
@@ -41,9 +54,9 @@ const AdminConfigTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }:
       }),
       columnHelper.display({
         id: "actions",
-        cell: (props) => (
+        cell: (cell) => (
           <AdminConfigTableRowAction
-            id={props.row.original.uuid}
+            id={cell.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
           />
@@ -53,7 +66,7 @@ const AdminConfigTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }:
         },
       }),
     ],
-    [columnHelper, onClickDelete, onClickEdit, t],
+    [columnHelper, onClickDelete, onClickEdit, t, onGetAll],
   );
 
   return (
@@ -62,6 +75,7 @@ const AdminConfigTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }:
       meta={meta}
       columns={columns as Array<ColumnDef<ConfigDataType>>}
       isLoading={isLoading}
+      {...props}
     />
   );
 };

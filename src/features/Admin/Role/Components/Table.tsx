@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Table from "@components/Table/Table";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { TableProps } from "@components/Table";
-import { UserRoleDataType } from "@interfaces/Common";
+import { BaseListQueryType, ResponseDataType, UserRoleDataType } from "@interfaces/Common";
 import { UserRoleEnum } from "@enums/userEnum";
 
 import AdminRoleTableRowAction, { AdminRoleTableRowActionProps } from "./TableRowAction";
@@ -13,9 +13,18 @@ import AdminRoleTableRowAction, { AdminRoleTableRowActionProps } from "./TableRo
 interface AdminRoleTableProps extends Omit<TableProps, "columns">, Omit<AdminRoleTableRowActionProps, "id"> {
   data: UserRoleDataType[];
   isLoading: boolean;
+  onGetAll: (params?: BaseListQueryType) => Promise<ResponseDataType<UserRoleDataType[]>>;
 }
 
-const AdminRoleTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: AdminRoleTableProps) => {
+const AdminRoleTable = ({
+  data,
+  meta,
+  isLoading,
+  onClickEdit,
+  onClickDelete,
+  onGetAll,
+  ...props
+}: AdminRoleTableProps) => {
   const { t } = useTranslation();
 
   const columnHelper = useMemo(() => createColumnHelper<UserRoleDataType>(), []);
@@ -29,12 +38,16 @@ const AdminRoleTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: A
       columnHelper.accessor((row) => row.name, {
         id: "name",
         header: t("name"),
+        meta: {
+          filterBy: "name",
+          getFilterOptions: onGetAll,
+        },
       }),
       columnHelper.display({
         id: "actions",
-        cell: (props) => (
+        cell: (cell) => (
           <AdminRoleTableRowAction
-            id={props.row.original.uuid}
+            id={cell.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
           />
@@ -44,7 +57,7 @@ const AdminRoleTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: A
         },
       }),
     ],
-    [columnHelper, onClickDelete, onClickEdit, t],
+    [columnHelper, onClickDelete, onClickEdit, t, onGetAll],
   );
 
   return (
@@ -53,6 +66,7 @@ const AdminRoleTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: A
       meta={meta}
       columns={columns as Array<ColumnDef<UserRoleDataType>>}
       isLoading={isLoading}
+      {...props}
     />
   );
 };

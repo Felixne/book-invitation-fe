@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LayoutContentWrapper } from "@common/Layout";
 import { ConfirmationModal } from "@components/Modal";
-import { UserDataType } from "@interfaces/Common";
+import { BaseListQueryType, ResponseMetaType, UserDataType } from "@interfaces/Common";
 import { adminUserService } from "@services/index";
 import { deleteUser } from "@services/Admin/userService";
 
@@ -15,10 +15,12 @@ const AdminUserManagement = () => {
   const { t } = useTranslation();
 
   const [userData, setUserData] = useState<UserDataType[]>([]);
+  const [meta, setMeta] = useState<ResponseMetaType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowModificationModal, setIsShowModificationModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<Key | null>(null);
+  const [queryParams, setQueryParams] = useState<BaseListQueryType | undefined>({});
 
   const selectedUser = useMemo(() => {
     return userData.find((item) => item.uuid === selectedUserId) ?? null;
@@ -45,15 +47,14 @@ const AdminUserManagement = () => {
   }, []);
 
   const fetchData = useCallback(async () => {
-    adminUserService
-      .getUsers()
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    try {
+      const { data, meta: dataMeta } = await adminUserService.getUsers(queryParams);
+      setUserData(data);
+      setMeta(dataMeta);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [queryParams]);
 
   useEffect(() => {
     fetchData();
@@ -74,9 +75,12 @@ const AdminUserManagement = () => {
     >
       <AdminUserTable
         data={userData}
+        meta={meta}
         isLoading={isLoading}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
+        onChangeState={setQueryParams}
+        onGetAll={adminUserService.getUsers}
       />
       <ConfirmationModal
         title={t("deleteUser", { name: selectedUser?.name })}

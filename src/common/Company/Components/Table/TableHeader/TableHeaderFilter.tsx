@@ -48,8 +48,8 @@ const TableHeaderFilter = (
 
   const isFirstRenderRef = useRef(true);
   const filterOptionLabelFactory = useMemo(
-    () => headerColumnDef.meta?.filterOptionLabelFactory ?? ((option: never) => `${option}`),
-    [headerColumnDef.meta?.filterOptionLabelFactory],
+    () => headerColumnDef.meta?.filterOptionLabelFactory ?? ((option: never) => `${option[filterBy]}`),
+    [headerColumnDef.meta?.filterOptionLabelFactory, filterBy],
   );
 
   const filterValueBy = useMemo(

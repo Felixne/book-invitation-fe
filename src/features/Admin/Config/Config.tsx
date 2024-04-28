@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LayoutContentWrapper } from "@common/Layout";
 import { ConfirmationModal } from "@components/Modal";
-import { ConfigDataType, ResponseMetaType } from "@interfaces/Common";
+import { BaseListQueryType, ConfigDataType, ResponseMetaType } from "@interfaces/Common";
 import { createConfig, deleteConfig, editConfig, getConfigs } from "@services/Common/configService";
 
 import AdminConfigTable from "./Components/Table";
@@ -19,6 +19,7 @@ const AdminConfigManagement = () => {
   const [isShowModificationModal, setIsShowModificationModal] = useState<boolean>(false);
   const [selectedConfigId, setSelectedConfigId] = useState<Key | null>(null);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
+  const [queryParams, setQueryParams] = useState<BaseListQueryType | undefined>({});
 
   const selectedConfig = useMemo(() => {
     return categoryData.find((item) => item.uuid === selectedConfigId) ?? null;
@@ -46,13 +47,13 @@ const AdminConfigManagement = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data, meta: metaData } = await getConfigs();
+      const { data, meta: metaData } = await getConfigs(queryParams);
       setConfigData(data);
       setMeta(metaData);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [queryParams]);
 
   useEffect(() => {
     fetchData();
@@ -77,6 +78,8 @@ const AdminConfigManagement = () => {
         isLoading={isLoading}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
+        onChangeState={setQueryParams}
+        onGetAll={getConfigs}
       />
       <AdminConfigModificationModal
         isOpen={isShowModificationModal}

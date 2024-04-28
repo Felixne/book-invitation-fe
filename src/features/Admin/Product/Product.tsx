@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LayoutContentWrapper } from "@common/Layout";
 import { ConfirmationModal } from "@components/Modal";
-import { ResponseMetaType } from "@interfaces/Common";
+import { BaseListQueryType, ResponseMetaType } from "@interfaces/Common";
 import { ProductDataType } from "@interfaces/Common/productType";
 
 import AdminProductTable from "./Components/Table";
@@ -25,6 +25,7 @@ const AdminProductManagement = () => {
   const [isShowModificationModal, setIsShowModificationModal] = useState<boolean>(false);
   const [selectedProductId, setSelectedProductId] = useState<Key | null>(null);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
+  const [queryParams, setQueryParams] = useState<BaseListQueryType | undefined>({});
 
   const selectedProduct = useMemo(() => {
     return productData.find((item) => item.uuid === selectedProductId) ?? null;
@@ -54,13 +55,14 @@ const AdminProductManagement = () => {
     try {
       const { data, meta: metaData } = await getProducts({
         expand: ["product__category_uuid"],
+        ...queryParams,
       });
       setProductData(data);
       setMeta(metaData);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [queryParams]);
 
   useEffect(() => {
     fetchData();
@@ -85,6 +87,8 @@ const AdminProductManagement = () => {
         isLoading={isLoading}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
+        onChangeState={setQueryParams}
+        onGetAll={getProducts}
       />
       <AdminProductModificationModal
         isOpen={isShowModificationModal}

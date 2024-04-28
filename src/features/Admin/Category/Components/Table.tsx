@@ -6,6 +6,7 @@ import Table from "@components/Table/Table";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { CategoryDataType } from "@interfaces/Common/categoryType";
 import { TableProps } from "@components/Table";
+import { BaseListQueryType, ResponseDataType } from "@interfaces/Common";
 
 import AdminCategoryTableRowAction, { AdminCategoryTableRowActionProps } from "./TableRowAction";
 
@@ -14,6 +15,7 @@ interface AdminCategoryTableProps
     Omit<AdminCategoryTableRowActionProps, "id"> {
   data: CategoryDataType[];
   isLoading: boolean;
+  onGetAll: (params?: BaseListQueryType) => Promise<ResponseDataType<CategoryDataType[]>>;
 }
 
 const AdminCategoryTable = ({
@@ -22,6 +24,8 @@ const AdminCategoryTable = ({
   isLoading,
   onClickEdit,
   onClickDelete,
+  onGetAll,
+  ...props
 }: AdminCategoryTableProps) => {
   const { t } = useTranslation();
 
@@ -36,6 +40,10 @@ const AdminCategoryTable = ({
       columnHelper.accessor((row) => row.name, {
         id: "name",
         header: t("name"),
+        meta: {
+          filterBy: "name",
+          getFilterOptions: onGetAll,
+        },
       }),
       columnHelper.accessor((row) => row.description, {
         id: "description",
@@ -43,9 +51,9 @@ const AdminCategoryTable = ({
       }),
       columnHelper.display({
         id: "actions",
-        cell: (props) => (
+        cell: (cell) => (
           <AdminCategoryTableRowAction
-            id={props.row.original.uuid}
+            id={cell.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
           />
@@ -55,7 +63,7 @@ const AdminCategoryTable = ({
         },
       }),
     ],
-    [columnHelper, onClickDelete, onClickEdit, t],
+    [columnHelper, onClickDelete, onClickEdit, t, onGetAll],
   );
 
   return (
@@ -64,6 +72,7 @@ const AdminCategoryTable = ({
       meta={meta}
       columns={columns as Array<ColumnDef<CategoryDataType>>}
       isLoading={isLoading}
+      {...props}
     />
   );
 };

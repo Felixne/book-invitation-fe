@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LayoutContentWrapper } from "@common/Layout";
 import { ConfirmationModal } from "@components/Modal";
-import { ResponseMetaType, UserRoleDataType } from "@interfaces/Common";
+import { BaseListQueryType, ResponseMetaType, UserRoleDataType } from "@interfaces/Common";
 import { createRole, deleteRole, editRole, getRoles } from "@services/Common/roleService";
 
 import AdminRoleTable from "./Components/Table";
@@ -15,6 +15,7 @@ const AdminRoleManagement = () => {
 
   const [roleData, setRoleData] = useState<UserRoleDataType[]>([]);
   const [meta, setMeta] = useState<ResponseMetaType | null>(null);
+  const [queryParams, setQueryParams] = useState<BaseListQueryType | undefined>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isShowModificationModal, setIsShowModificationModal] = useState<boolean>(false);
   const [selectedRoleId, setSelectedRoleId] = useState<Key | null>(null);
@@ -46,13 +47,13 @@ const AdminRoleManagement = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data, meta: metaData } = await getRoles();
+      const { data, meta: metaData } = await getRoles(queryParams);
       setRoleData(data);
       setMeta(metaData);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [queryParams]);
 
   useEffect(() => {
     fetchData();
@@ -77,6 +78,8 @@ const AdminRoleManagement = () => {
         isLoading={isLoading}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
+        onChangeState={setQueryParams}
+        onGetAll={getRoles}
       />
       <AdminRoleModificationModal
         isOpen={isShowModificationModal}

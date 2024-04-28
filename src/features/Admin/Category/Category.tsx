@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from "@common/Layout";
 import { CategoryDataType } from "@interfaces/Common/categoryType";
 import { createCategory, deleteCategory, editCategory, getCaterories } from "@services/App/categoryService";
 import { ConfirmationModal } from "@components/Modal";
-import { ResponseMetaType } from "@interfaces/Common";
+import { BaseListQueryType, ResponseMetaType } from "@interfaces/Common";
 
 import AdminCategoryTable from "./Components/Table";
 import AdminCategoryModificationModal from "./Components/ModificationModal";
@@ -20,6 +20,7 @@ const AdminCategoryManagement = () => {
   const [isShowModificationModal, setIsShowModificationModal] = useState<boolean>(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<Key | null>(null);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
+  const [queryParams, setQueryParams] = useState<BaseListQueryType | undefined>({});
 
   const selectedCategory = useMemo(() => {
     return categoryData.find((item) => item.uuid === selectedCategoryId) ?? null;
@@ -47,13 +48,13 @@ const AdminCategoryManagement = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data, meta: metaData } = await getCaterories();
+      const { data, meta: metaData } = await getCaterories(queryParams);
       setCategoryData(data);
       setMeta(metaData);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [queryParams]);
 
   useEffect(() => {
     fetchData();
@@ -78,6 +79,8 @@ const AdminCategoryManagement = () => {
         isLoading={isLoading}
         onClickEdit={handleClickEditButton}
         onClickDelete={handleClickDeleteButton}
+        onChangeState={setQueryParams}
+        onGetAll={getCaterories}
       />
       <AdminCategoryModificationModal
         isOpen={isShowModificationModal}
