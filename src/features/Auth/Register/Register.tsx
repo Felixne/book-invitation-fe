@@ -2,7 +2,7 @@ import { UNPROCESSABLE_ENTITY } from "http-status";
 import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { Alert } from "@components/Alert";
 import { Button } from "@components/Button";
@@ -25,6 +25,7 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const {
     control,
@@ -35,18 +36,16 @@ const Register = () => {
     resolver: registerFormSchema(t),
   });
 
-  const isAcceptedTerms = watch("isAcceptedTerms", false);
   const email = watch("email", "");
 
-  const handleSubmit = useFormSubmit((formData) => {
+  const handleSubmit = useFormSubmit(async (formData) => {
     setIsSubmitting(true);
 
-    authService
+    await authService
       .register(formData)
       .then((userData) => {
-        const { token } = userData.data;
-        // const redirectURL = generateAuthRedirectURL([userData.role.name], searchParams.get("redirect"));
-        setAuthToken(token);
+        setAuthToken({ token: userData?.token });
+        navigate("/");
       })
       .catch((err) => {
         const { status } = err.response.data;
@@ -96,39 +95,29 @@ const Register = () => {
             )}
           </Alert>
         )}
-        <div className="grid grid-cols-2 gap-6">
-          <Input
-            type="text"
-            label={t("firstName")}
-            name="firstName"
-            className="block"
-            disabled={isSubmitting}
-            control={control}
-          />
-          <Input
-            type="text"
-            label={t("lastName")}
-            name="lastName"
-            className="block"
-            disabled={isSubmitting}
-            control={control}
-          />
-        </div>
+
+        <Input
+          type="text"
+          label={t("name")}
+          name="name"
+          className="block"
+          disabled={isSubmitting}
+          control={control}
+        />
+        <Input
+          type="text"
+          label={t("username")}
+          name="username"
+          className="block"
+          disabled={isSubmitting}
+          control={control}
+        />
         <Input
           type="text"
           label={t("email")}
           name="email"
           disabled={isSubmitting}
           className="block"
-          control={control}
-        />
-        <Input
-          type="text"
-          label={t("phone")}
-          id="phone"
-          name="phone"
-          className="block"
-          disabled={isSubmitting}
           control={control}
         />
         <Input
@@ -139,16 +128,8 @@ const Register = () => {
           disabled={isSubmitting}
           control={control}
         />
-        <Input
-          type="password"
-          label={t("passwordConfirmation")}
-          name="passwordConfirmation"
-          className="block"
-          disabled={isSubmitting}
-          control={control}
-        />
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="isAcceptedTerms" className="group flex items-center justify-start space-x-4">
+        <label htmlFor="isAcceptedTerms" className="group hidden items-center justify-start space-x-4">
           <Checkbox
             name="isAcceptedTerms"
             className="flex-shrink-0"
@@ -164,7 +145,7 @@ const Register = () => {
             </Trans>
           </div>
         </label>
-        <Button type="submit" disabled={isSubmitting || !isAcceptedTerms} isLoading={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
           {t("register")}
         </Button>
       </form>

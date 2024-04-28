@@ -8,6 +8,7 @@ import { ProductDataType } from "@interfaces/Common/productType";
 import TableImageColumn from "@components/Table/TableImageColumn";
 import { TableImageColumnTypeEnum } from "@enums/commonEnum";
 import { TableProps } from "@components/Table";
+import { BaseListQueryType, ResponseDataType } from "@interfaces/Common";
 
 import AdminProductTableRowAction, { AdminProductTableRowActionProps } from "./TableRowAction";
 
@@ -16,9 +17,18 @@ interface AdminProductTableProps
     Omit<AdminProductTableRowActionProps, "id"> {
   data: ProductDataType[];
   isLoading: boolean;
+  onGetAll: (params?: BaseListQueryType) => Promise<ResponseDataType<ProductDataType[]>>;
 }
 
-const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }: AdminProductTableProps) => {
+const AdminProductTable = ({
+  data,
+  meta,
+  isLoading,
+  onClickEdit,
+  onClickDelete,
+  onGetAll,
+  ...props
+}: AdminProductTableProps) => {
   const { t } = useTranslation();
 
   const columnHelper = useMemo(() => createColumnHelper<ProductDataType>(), []);
@@ -32,11 +42,11 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
       columnHelper.display({
         id: "img",
         header: t("img"),
-        cell: (props) => (
+        cell: (cell) => (
           <TableImageColumn
             className="w-28 h-40 rounded-md"
-            src={props.row.original.image}
-            alt={props.row.original.name}
+            src={cell.row.original.image}
+            alt={cell.row.original.name}
             type={TableImageColumnTypeEnum.BOX}
           />
         ),
@@ -47,6 +57,10 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
       columnHelper.accessor((row) => row.name, {
         id: "name",
         header: t("name"),
+        meta: {
+          filterBy: "name",
+          getFilterOptions: onGetAll,
+        },
       }),
       columnHelper.accessor((row) => row.price, {
         id: "price",
@@ -62,9 +76,9 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
       }),
       columnHelper.display({
         id: "actions",
-        cell: (props) => (
+        cell: (cell) => (
           <AdminProductTableRowAction
-            id={props.row.original.uuid}
+            id={cell.row.original.uuid}
             onClickEdit={onClickEdit}
             onClickDelete={onClickDelete}
           />
@@ -74,7 +88,7 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
         },
       }),
     ],
-    [columnHelper, onClickDelete, onClickEdit, t],
+    [columnHelper, onClickDelete, onClickEdit, t, onGetAll],
   );
 
   return (
@@ -83,6 +97,7 @@ const AdminProductTable = ({ data, meta, isLoading, onClickEdit, onClickDelete }
       meta={meta}
       columns={columns as Array<ColumnDef<ProductDataType>>}
       isLoading={isLoading}
+      {...props}
     />
   );
 };
