@@ -79,23 +79,25 @@ const TableContentBody = (
             )}
           </Fragment>
         ))}
-      <TableFooterInfinity
-        as="tr"
-        isShown={isShowFooter}
-        isTriggerEarly
-        ref={ref}
-        tableBodyRef={tableBodyRef}
-        pageIndex={pageIndex}
-        onChangePageIndex={onChangePageIndex}
-      >
-        {Array.from({ length: skeletons }).map((_, index) => (
-          <TableContentBodySkeleton
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            headers={headers.filter((header) => !hiddenColumnIds.includes(header.id))}
-          />
-        ))}
-      </TableFooterInfinity>
+      {loadingType === "infinite" && (
+        <TableFooterInfinity
+          as="tr"
+          isShown={isShowFooter}
+          isTriggerEarly
+          ref={ref}
+          tableBodyRef={tableBodyRef}
+          pageIndex={pageIndex}
+          onChangePageIndex={onChangePageIndex}
+        >
+          {Array.from({ length: skeletons }).map((_, index) => (
+            <TableContentBodySkeleton
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              headers={headers.filter((header) => !hiddenColumnIds.includes(header.id))}
+            />
+          ))}
+        </TableFooterInfinity>
+      )}
       {((rows.length === 0 && isLoading) || (isLoading && !!rows.length && loadingType === "infinite")) &&
         Array.from({ length: skeletons }).map((_, index) => (
           <TableContentBodySkeleton

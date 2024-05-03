@@ -75,7 +75,9 @@ const CommonRoutes = () => {
 
   const fetchCategoriesData = useCallback(async () => {
     try {
-      const { data } = await getCaterories();
+      const { data } = await getCaterories({
+        expand: ["category__root"],
+      });
       dispatch(setCategories(data));
     } catch {
       throw new Error();

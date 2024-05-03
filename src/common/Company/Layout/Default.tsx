@@ -1,4 +1,5 @@
-import { ReactNode, memo } from "react";
+import { ReactNode, memo, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Info } from "@components/Info";
 
@@ -11,12 +12,15 @@ interface DefaultLayoutProps {
 }
 
 const LayoutDefault = ({ children, headerPrefix }: DefaultLayoutProps) => {
+  const { pathname } = useLocation();
+
+  const isMatchAdminPath = useMemo(() => pathname.includes("admin"), [pathname]);
   return (
     <>
       <LayoutHeader prefix={headerPrefix} />
       {children}
       <Footer />
-      <Info />
+      {!isMatchAdminPath && <Info />}
     </>
   );
 };

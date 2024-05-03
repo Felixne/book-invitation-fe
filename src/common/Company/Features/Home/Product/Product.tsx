@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@components/Button";
@@ -6,7 +6,8 @@ import { ProductDataType } from "@interfaces/Common/productType";
 import { getProducts } from "@services/App/productService";
 import useToast from "@hooks/useToast";
 import { LoadingSkeleton } from "@components/Loading";
-import { BaseListQueryType } from "@interfaces/Common";
+import { BaseListQueryType, TableFilterStateType } from "@interfaces/Common";
+import useWatchParam from "@hooks/useWatchParam";
 
 import ProductItem from "./ProductItem";
 
@@ -20,17 +21,41 @@ const Product = ({ queryParams, setQueryParams }: ProductProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
   const { t } = useTranslation();
+  const [filterParam] = useWatchParam("filter");
+  const defaultFilter = useMemo<TableFilterStateType[] | null>(() => {
+    if (!filterParam) {
+      return null;
+    }
+
+    const decoded = decodeURIComponent(filterParam);
+
+    const filterStrings = decoded.split(";");
+    const filters: TableFilterStateType[] = filterStrings.map((filterString) => {
+      const [filterBy, value] = filterString.split("=");
+      return { filterBy, values: value.split(",").map((item) => item.replace(/\+/g, " ")) };
+    });
+
+    return filters;
+  }, [filterParam]);
 
   const fetchData = useCallback(async () => {
     try {
-      const { data } = await getProducts(queryParams || {});
+      const { data } = await getProducts(
+        ({
+          ...queryParams,
+          filterParams: [
+            ...((queryParams?.filterParams as TableFilterStateType[]) || []),
+            ...(defaultFilter ? (defaultFilter as TableFilterStateType[]) : []),
+          ],
+        } as BaseListQueryType) || ({} as BaseListQueryType),
+      );
       setProductData(data);
     } catch (error) {
       toast.error(t("unknown"));
     } finally {
       setIsLoading(false);
     }
-  }, [toast, t, queryParams]);
+  }, [toast, t, queryParams, defaultFilter]);
 
   const handleSetParams = useCallback(() => {
     if (!setQueryParams) return;

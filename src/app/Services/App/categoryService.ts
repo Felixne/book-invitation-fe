@@ -21,4 +21,12 @@ const deleteCategory = async (id: number) => {
   await axiosInstance.delete(CATEGORY_API_PATH.CATEGORY_ID(id));
 };
 
-export { getCaterories, createCategory, editCategory, deleteCategory };
+const getCateroriesAccessById = async (id: number): Promise<ResponseDataType<CategoryDataType[]>> => {
+  const response = await axiosInstance.get(CATEGORY_API_PATH.CATEGORIES_ACCESS_ID(id));
+  return {
+    data: response.data.data,
+    meta: response.data.meta,
+  };
+};
+
+export { getCaterories, createCategory, editCategory, deleteCategory, getCateroriesAccessById };

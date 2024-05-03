@@ -2,14 +2,17 @@ import { AxiosError } from "axios";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { values } from "lodash";
 
-import { Input } from "@components/Form";
+import { Input, Select } from "@components/Form";
 import { Modal } from "@components/Modal";
 import { ModalProps } from "@components/Modal/interface";
 import useToast from "@hooks/useToast";
 import { setFormError } from "@utils/Helpers/errorHelper";
 import { ConfigDataType, ConfigFormDataType } from "@interfaces/Common";
-import { ConfigTypeEnum } from "@enums/configEnum";
+import { ConfigDataTypeEnum, ConfigTypeEnum } from "@enums/configEnum";
+
+import ValueConfigInput from "./ValueConfigInput";
 
 interface AdminConfigModificationModalProps extends ModalProps {
   config: ConfigDataType | null;
@@ -20,9 +23,11 @@ interface AdminConfigModificationModalProps extends ModalProps {
 }
 
 const DEFAULT_VALUE: ConfigFormDataType = {
+  value: null,
   key: "",
   type: ConfigTypeEnum.PUBLIC,
   description: "",
+  datatype: ConfigDataTypeEnum.TEXT,
 };
 
 const AdminConfigModificationModal = ({
@@ -48,6 +53,7 @@ const AdminConfigModificationModal = ({
     control,
     reset,
     handleSubmit: useFormSubmit,
+    watch,
     ...methods
   } = useForm<ConfigFormDataType>({
     // resolver: yupResolver(adminUserModificationFormSchema(t)),
@@ -93,15 +99,26 @@ const AdminConfigModificationModal = ({
 
   const handleSubmit = useFormSubmit(async (formData) => {
     setIsSubmitting(true);
+    let formatFormData = {};
+    if (formData.datatype === ConfigDataTypeEnum.IMAGES) {
+      formatFormData = { ...formData, value: [formData.value] };
+    } else {
+      formatFormData = formData;
+    }
 
     if (!config) {
-      handleCreateConfig(formData);
+      handleCreateConfig(formatFormData);
 
       return;
     }
 
     handleEditConfig(formData);
   });
+
+  const configDataTypeOptions = values(ConfigDataTypeEnum).map((item) => ({
+    label: item,
+    value: item,
+  }));
 
   useEffect(() => {
     if (!isOpen) {
@@ -118,6 +135,8 @@ const AdminConfigModificationModal = ({
     reset(DEFAULT_VALUE);
   }, [isOpen, reset, config]);
 
+  // const selectedType = useMemo(() => getValues("datatype"), [getValues]);
+
   return (
     <Modal
       isLoading={isSubmitting}
@@ -133,16 +152,18 @@ const AdminConfigModificationModal = ({
         className="block w-full"
         control={control}
         disabled={isSubmitting}
-        label={t("value")}
-        name="value"
-      />
-      <Input
-        className="block w-full"
-        control={control}
-        disabled={isSubmitting}
         label={t("description")}
         name="description"
       />
+      <Select
+        isDisabled={isSubmitting}
+        name="datatype"
+        className="w-full"
+        control={control}
+        options={configDataTypeOptions}
+        placeholder={t("datatype")}
+      />
+      <ValueConfigInput type={watch("datatype")} control={control} isSubmitting={isSubmitting} />
     </Modal>
   );
 };

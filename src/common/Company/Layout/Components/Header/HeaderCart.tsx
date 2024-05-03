@@ -1,35 +1,33 @@
-import { memo, useCallback, useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-import useSelector from "@hooks/useSelector";
 import useToast from "@hooks/useToast";
-import useDispatch from "@hooks/useDispatch";
+import { CartDataType } from "@interfaces/Common/cartType";
+import useSelector from "@hooks/useSelector";
 
 import { getCarts } from "../../../../../app/Services/App/cartService";
-import { setCarts } from "../../../../../app/Slices/commonSlice";
 
 const HeaderCart = () => {
   const { cart } = useSelector((state) => state.common);
+  const [carts, setCarts] = useState<CartDataType[]>([]);
   const { t } = useTranslation();
   const toast = useToast();
-  const dispatch = useDispatch();
-  const cartQuantity = useMemo(() => cart.reduce((prev, item) => prev + item.quantity, 0), [cart]);
+  const cartQuantity = useMemo(() => carts.reduce((prev, item) => prev + item.quantity, 0), [carts]);
 
   const fetchData = useCallback(async () => {
+    if (!cart) return;
     try {
       const data = await getCarts({
         expand: ["cart__product", "cart_item__product"],
       });
-      dispatch(
-        setCarts(data.products.map((item) => ({ product_uuid: item.product_uuid, quantity: item.quantity }))),
-      );
+      setCarts(data.products.map((item) => ({ product_uuid: item.product_uuid, quantity: item.quantity })));
     } catch (error) {
       toast.error(t("unknown"));
     }
-  }, [t, toast, dispatch]);
+  }, [t, toast, cart]);
 
   useEffect(() => {
     fetchData();
