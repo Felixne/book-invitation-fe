@@ -179,6 +179,7 @@ const AdminProductModificationModal = ({
         className="w-full"
         control={control}
         options={categoryOption}
+        placeholder={t("category")}
       />
       <UploadInput
         containerClassName="w-full"

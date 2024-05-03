@@ -1,15 +1,16 @@
 import { AxiosError } from "axios";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { omit } from "lodash";
 
-import { Input } from "@components/Form";
+import { Input, Select } from "@components/Form";
 import { Modal } from "@components/Modal";
 import { ModalProps } from "@components/Modal/interface";
 import useToast from "@hooks/useToast";
 import { setFormError } from "@utils/Helpers/errorHelper";
 import { CategoryDataType, CategoryFormDataType } from "@interfaces/Common/categoryType";
+import { getCateroriesAccessById } from "@services/App/categoryService";
 
 interface AdminCategoryModificationModalProps extends ModalProps {
   category: CategoryDataType | null;
@@ -38,6 +39,8 @@ const AdminCategoryModificationModal = ({
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categoryData, setCategoryData] = useState<CategoryDataType[]>([]);
 
   const handleUnknownError = useCallback(() => {
     toast.error(t("unknown"));
@@ -56,7 +59,7 @@ const AdminCategoryModificationModal = ({
   const handleCreateCategory = useCallback(
     async (formData: CategoryFormDataType) => {
       try {
-        await onCreate(formData);
+        await onCreate(omit(formData, "parent_uuid"));
         toast.success(t("addCategorySuccessfully"));
         onCreated();
         onClose();
@@ -98,8 +101,17 @@ const AdminCategoryModificationModal = ({
       return;
     }
 
-    handleEditCategory(omit(formData, "parent_uuid"));
+    handleEditCategory(formData);
   });
+
+  const fetchData = useCallback(async (idCategory: number) => {
+    try {
+      const { data } = await getCateroriesAccessById(idCategory);
+      setCategoryData(data);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -109,12 +121,18 @@ const AdminCategoryModificationModal = ({
     setIsSubmitting(false);
 
     if (category) {
+      fetchData(category.uuid);
       reset(category);
       return;
     }
 
     reset(DEFAULT_VALUE);
-  }, [isOpen, reset, category]);
+  }, [isOpen, reset, category, fetchData]);
+
+  const categoryOption = useMemo(
+    () => categoryData.map((item) => ({ value: item.uuid, label: item.name })),
+    [categoryData],
+  );
 
   return (
     <Modal
@@ -140,6 +158,16 @@ const AdminCategoryModificationModal = ({
         label={t("description")}
         name="description"
       />
+      {category && (
+        <Select
+          isDisabled={isLoading}
+          name="parent_uuid"
+          className="w-full"
+          control={control}
+          options={categoryOption}
+          placeholder={t("category")}
+        />
+      )}
     </Modal>
   );
 };

@@ -27,6 +27,7 @@ export const CATEGORY_API_PATH = {
   CATEGORIES: "api/categories",
   CATEGORY: "api/category",
   CATEGORY_ID: (id: number) => `api/category/${id}`,
+  CATEGORIES_ACCESS_ID: (id: number) => `api/categories-access?category_uuid=${id}`,
 };
 
 export const USER_API_PATH = {
@@ -51,4 +52,16 @@ export const ROLE_API_PATH = {
   ROLES: "api/roles",
   ROLE: "api/role",
   ROLE_ID: (id: number) => `api/role/${id}`,
+};
+
+export const MY_BILLING_ADDRESS_API_PATH = {
+  BILLING_ADDRESSES: "api/my/billing-addresses",
+  BILLING_ADDRESS: "api/my/billing-address",
+  BILLING_ADDRESS_ID: (id: number) => `api/my/billing-address/${id}`,
+};
+
+export const BOOKING_FORM_API_PATH = {
+  BOOKING_FORMS: "api/booking-forms",
+  BOOKING_FORM: "api/booking-form",
+  BOOKING_FORM_ID: (id: number) => `api/booking-form/${id}`,
 };

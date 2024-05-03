@@ -1,4 +1,4 @@
-import { ConfigStatusEnum, ConfigTypeEnum } from "../../Enums";
+import { ConfigDataTypeEnum, ConfigStatusEnum, ConfigTypeEnum } from "../../Enums";
 import { BaseDataType, Nullable } from "./commonType";
 
 export interface ConfigStatusDataType {
@@ -16,6 +16,7 @@ export interface ConfigDataType extends BaseDataType {
   value: string;
   type: ConfigTypeEnum;
   description?: string;
+  datatype?: ConfigDataTypeEnum;
 }
 
 export interface ConfigFormDataType extends Partial<Nullable<ConfigDataType>> {}

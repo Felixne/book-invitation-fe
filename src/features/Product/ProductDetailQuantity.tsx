@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@components/Button";
 import useDispatch from "@hooks/useDispatch";
-import { addToCart, removeToCart } from "@slices/commonSlice";
+import { addToCart } from "@slices/commonSlice";
 import { ProductDataType } from "@interfaces/Common/productType";
 import useSelector from "@hooks/useSelector";
 import { addCart } from "@services/App/cartService";
@@ -26,8 +26,7 @@ const ProductDetailQuantity = ({ product }: ProductDetailQuantityProps) => {
   const handleAddQuantity = useCallback(() => {
     if (!product) return;
     setQuantity((prev) => prev + 1);
-    dispatch(addToCart({ product_uuid: product.uuid, quantity: quantity + 1 }));
-  }, [dispatch, product, quantity]);
+  }, [product]);
 
   const handleMinusQuantity = useCallback(() => {
     if (!product) return;
@@ -35,8 +34,7 @@ const ProductDetailQuantity = ({ product }: ProductDetailQuantityProps) => {
       if (prev === 0) return 0;
       return prev - 1;
     });
-    dispatch(removeToCart({ product_uuid: product.uuid, quantity: quantity - 1 }));
-  }, [product, dispatch, quantity]);
+  }, [product]);
 
   const handleClickAddToCart = useCallback(async () => {
     if (!user) {
@@ -45,13 +43,14 @@ const ProductDetailQuantity = ({ product }: ProductDetailQuantityProps) => {
     if (!product) return;
     try {
       await addCart({ product_uuid: product.uuid, quantity });
+      dispatch(addToCart({ product_uuid: product.uuid, quantity }));
       toast.success(t("addToCartSuccessfully"));
     } catch {
       toast.error(t("unknown"));
     } finally {
       setQuantity(0);
     }
-  }, [product, quantity, user, toast, t, navigate]);
+  }, [product, dispatch, quantity, user, toast, t, navigate]);
   return (
     <div className="w-full h-fit">
       <div className="font-semibold uppercase">{t("quantity")}</div>

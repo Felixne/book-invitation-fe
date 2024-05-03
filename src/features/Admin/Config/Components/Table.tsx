@@ -6,8 +6,10 @@ import Table from "@components/Table/Table";
 import TableRowActionSkeleton from "@components/Table/TableRowActionSkeleton";
 import { TableProps } from "@components/Table";
 import { BaseListQueryType, ConfigDataType, ResponseDataType } from "@interfaces/Common";
+import { ConfigDataTypeEnum } from "@enums/configEnum";
 
 import AdminConfigTableRowAction, { AdminConfigTableRowActionProps } from "./TableRowAction";
+import ValueColumn from "./ValueColumn";
 
 interface AdminConfigTableProps
   extends Omit<TableProps, "columns">,
@@ -30,7 +32,7 @@ const AdminConfigTable = ({
 
   const columnHelper = useMemo(() => createColumnHelper<ConfigDataType>(), []);
 
-  const columns: Array<ColumnDef<ConfigDataType, string>> = useMemo(
+  const columns: Array<ColumnDef<ConfigDataType, ConfigDataTypeEnum>> = useMemo(
     () => [
       columnHelper.accessor((row) => String(row.uuid), {
         id: "id",
@@ -44,9 +46,13 @@ const AdminConfigTable = ({
           getFilterOptions: onGetAll,
         },
       }),
-      columnHelper.accessor((row) => row.value, {
+      columnHelper.accessor((row) => row.datatype, {
+        id: "datatype",
+        header: t("datatype"),
+      }),
+      columnHelper.display({
         id: "value",
-        header: t("value"),
+        cell: (cell) => <ValueColumn config={cell.row.original} />,
       }),
       columnHelper.accessor((row) => row.description, {
         id: "description",

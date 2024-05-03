@@ -7,3 +7,5 @@ export * as categoryService from "./App/categoryService";
 export * as productService from "./App/productService";
 export * as cartService from "./App/cartService";
 export * as roleService from "./Common/roleService";
+export * as billingAddressService from "./App/billingAddressService";
+export * as bookingFormService from "./App/bookingFormService";
