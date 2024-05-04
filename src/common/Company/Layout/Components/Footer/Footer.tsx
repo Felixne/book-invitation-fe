@@ -17,7 +17,7 @@ const Footer = () => {
       className="relative z-40 mx-auto overflow-hidden border-t-2 border-gray-100 bg-white px-3 sm:px-6 lg:px-8 xl:px-36"
       id="footer"
     >
-      <div className="relative z-10 grid gap-x-10 py-4 sm:grid-cols-2 sm:py-6 md:grid-cols-3 md:py-10">
+      <div className="relative z-10 grid xs:gap-4 md:gap-10 py-4 sm:grid-cols-2 sm:py-6 md:grid-cols-3 md:py-10">
         <div className="">
           <div className="mt-1.5">
             <Logo imageClassName="h-10" />

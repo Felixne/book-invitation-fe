@@ -44,7 +44,7 @@ const OrderPage = () => {
       {isEmpty(carts?.products) && !isLoading && <TableContentBodyEmptyItem className="h-96" />}
       {!isEmpty(carts?.products) && !isLoading && (
         <div className="w-full h-fit grid grid-cols-5 gap-6">
-          <div className="xs:col-span-5 lg:col-span-3 h-fit rounded-xl border-2 border-gray-100">
+          <div className="xs:col-span-5 lg:col-span-3 h-fit rounded-xl xs:border-none md:border-2 border-gray-100">
             <div className="w-fit xs:text-lg xs:m-2 md:m-6 mb-0 md:text-xl h-fit font-semibold relative before:w-full before:h-0.5 before:absolute before:bg-gray-50 before:rounded-full before:-bottom-1 before:left-0">
               {t("allItem")}
             </div>

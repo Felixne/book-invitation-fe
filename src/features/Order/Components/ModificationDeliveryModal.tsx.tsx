@@ -129,10 +129,10 @@ const ModificationDeliveryModal = ({
       title={billingAddress ? t("editBillingAddress") : t("addBillingAddress")}
       onClose={onClose}
       onConfirm={handleSubmit}
-      childrenClassName="grid grid-cols-2 gap-6 w-128"
+      childrenClassName="grid xs:grid-cols-1 md:grid-cols-2 gap-6 xs:w-full md:w-128"
       {...props}
     >
-      <div className="col-span-1 flex gap-6 flex-wrap">
+      <div className="xs:col-span-2 md:col-span-1 flex gap-6 flex-wrap">
         <Input
           control={control}
           disabled={isSubmitting}
