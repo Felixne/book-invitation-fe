@@ -14,6 +14,8 @@ import useDocumentTitle from "@hooks/useDocumentTitle";
 import { AuthFormGeneralError, AuthLoginFormDataType } from "@interfaces/Common";
 import { authService } from "@services/index";
 import { setAuthToken } from "@services/Common/authService";
+import useSelector from "@hooks/useSelector";
+import { commonSelector } from "@selectors/index";
 
 import AuthFormContainer from "../Components/AuthFormContainer";
 import { loginFormSchema } from "../Schemas/LoginFormSchema";
@@ -22,6 +24,7 @@ import LoginFormFooter from "./Components/LoginFormFooter";
 const Login = () => {
   const { t } = useTranslation();
 
+  const appNameConfigValue = useSelector(commonSelector.appNameConfigSelector);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generalError, setGeneralError] = useState<AuthFormGeneralError | null>(null);
   const [searchParams] = useSearchParams();
@@ -51,30 +54,16 @@ const Login = () => {
     } finally {
       setIsSubmitting(false);
     }
-
-    // authService
-    //   .loginWithEmailAndPassword(formData)
-    //   .then((userData) => {
-    //     const { token } = userData.data;
-    //     console.log(token);
-    //     // const redirectURL = generateAuthRedirectURL([userData.role.name], searchParams.get("redirect"));
-    //     // setAuthToken(token);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     if (err) {
-    //       setGeneralError({ ...err });
-    //     }
-    //   })
-    //   .finally(() => {
-    //     setIsSubmitting(false);
-    //   });
   });
 
   useDocumentTitle(t("login"));
 
   return (
-    <AuthFormContainer title={t("loginTitle")} subtitle={t("loginSubtitle")} footer={<LoginFormFooter />}>
+    <AuthFormContainer
+      title={t("loginTitle")}
+      subtitle={t("loginSubtitle", { appName: appNameConfigValue })}
+      footer={<LoginFormFooter />}
+    >
       <FormProvider control={control} handleSubmit={useFormSubmit} watch={watch} {...methods}>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
           {generalError && (

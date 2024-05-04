@@ -20,6 +20,11 @@ export const homeSliderSelector = createSelector(
   (config) => config?.value as unknown as string[],
 );
 
+export const statusOrderSelector = createSelector(
+  (state: RootState) => state.common.configs.find((config) => config.key === ConfigKeyEnum.STATUS_ORDER),
+  (config) => config?.value,
+);
+
 export const configSelector = createSelector(
   (state: RootState) => state.common.configs,
   (config) =>

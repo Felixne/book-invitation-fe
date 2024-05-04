@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from "react";
-import { IoCloseOutline, IoInformationOutline } from "react-icons/io5";
+import { IoCloseOutline } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
+import { FiPhoneCall } from "react-icons/fi";
 
 import useConfig from "@hooks/useConfig";
 import { ConfigKeyEnum } from "@enums/configEnum";
@@ -15,7 +16,7 @@ const Info = () => {
     <div className="w-12 h-12 z-50 fixed  border-2 border-gray-100 bg-primary-200 text-slate-700 xs:bottom-1/3 xs:right-4 md:bottom-6 md:right-6 rounded-full shadow-md">
       <div className="flex w-full h-full relative items-center justify-center">
         <div role="button" tabIndex={0} onClick={handleShowContact}>
-          {isShowContact ? <IoCloseOutline size={28} /> : <IoInformationOutline size={28} />}
+          {isShowContact ? <IoCloseOutline size={28} /> : <FiPhoneCall size={20} />}
         </div>
         <div
           className={twMerge(
