@@ -38,7 +38,7 @@ const Modal = (
       {isOpen && (
         <Dialog
           as={motion.div}
-          className="fixed inset-0 z-50 flex overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center overflow-hidden"
           open={isOpen}
           ref={ref}
           static
@@ -53,7 +53,7 @@ const Modal = (
           <Dialog.Panel
             animate={{ scale: 1, opacity: 1 }}
             as={motion.div}
-            className="relative w-fit rounded-lg bg-white duration-75 sm:m-auto sm:w-auto sm:max-w-none"
+            className="relative w-fit h-fit xs:rounded-none md:rounded-lg bg-white duration-75 sm:m-auto sm:w-auto sm:max-w-none"
             exit={{ scale: 0.9, opacity: 0 }}
             initial={{ scale: 0.9, opacity: 0 }}
           >
