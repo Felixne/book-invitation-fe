@@ -70,7 +70,7 @@ const HeaderUserDropdownItem = ({ onClick }: HeaderUserDropdownItemProps) => {
         onClick={onClick}
       >
         <FiHelpCircle />
-        <Link to="help">
+        <Link to="contact">
           <p className="ml-3 text-sm">{t("helpAndContact")}</p>
         </Link>
       </div>

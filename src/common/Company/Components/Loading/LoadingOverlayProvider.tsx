@@ -11,6 +11,7 @@ const LoadingOverlayProvider = () => {
   const config = useConfig();
   const logoSrc = config(ConfigKeyEnum.LOGO);
   const loadingText = config(ConfigKeyEnum.APP_DESCRIPTION);
+  const appName = config(ConfigKeyEnum.APP_NAME);
 
   return (
     <div
@@ -26,7 +27,7 @@ const LoadingOverlayProvider = () => {
             (logoSrc || loadingText) && "-translate-y-6 opacity-100",
           )}
         >
-          <div className="w-fit h-fit text-6xl text-black font-semibold">DEMARIAGE</div>
+          <div className="w-fit h-fit xs:text-2xl md:text-6xl text-black font-semibold">{appName}</div>
           <div className="text-center">{loadingText}</div>
         </div>
         <div

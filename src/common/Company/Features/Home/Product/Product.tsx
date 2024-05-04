@@ -8,6 +8,7 @@ import useToast from "@hooks/useToast";
 import { LoadingSkeleton } from "@components/Loading";
 import { BaseListQueryType, TableFilterStateType } from "@interfaces/Common";
 import useWatchParam from "@hooks/useWatchParam";
+import { TableContentBodyEmptyItem } from "@components/Table";
 
 import ProductItem from "./ProductItem";
 
@@ -70,13 +71,19 @@ const Product = ({ queryParams, setQueryParams }: ProductProps) => {
       <div className="w-full h-fit  grid xs:grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
         {!isLoading && productData.map((item) => <ProductItem key={item.uuid} product={item} />)}
         {isLoading &&
+          productData.length === 0 &&
           Array.from({ length: 8 }).map((_1, index) => (
             <LoadingSkeleton
               // eslint-disable-next-line react/no-array-index-key
               key={index}
-              className="col-span-1 h-60 bg-white  group rounded-xl border border-gray-100"
+              className="xs:col-span-1 md:col-span-3 xl:col-span-4 h-60 bg-white  group rounded-xl border border-gray-100"
             />
           ))}
+        {!isLoading && productData.length === 0 && (
+          <div className="xs:col-span-1 md:col-span-3 xl:col-span-4 flex items-center justify-center">
+            <TableContentBodyEmptyItem className="h-96" />
+          </div>
+        )}
       </div>
       <div className="w-full py-8 flex justify-center items-center">
         <div className="xs:w-40 md:w-48 h-10">

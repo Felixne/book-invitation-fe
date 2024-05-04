@@ -69,7 +69,7 @@ const AdminConfigManagement = () => {
 
   return (
     <LayoutContentWrapper
-      title={t("categoryManagement")}
+      title={t("configManagement")}
       action={<AdminConfigHeaderAction onClickAdd={handleClickAddButton} />}
     >
       <AdminConfigTable

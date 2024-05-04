@@ -25,7 +25,7 @@ const Logo = ({ className, imageClassName }: LogoProps) => {
         <img
           src={logoConfigValue}
           alt={appNameConfigValue}
-          className={twMerge("xs:h-6 md:h-8 xs:w-28 md:w-48", imageClassName)}
+          className={twMerge("w-fit h-fit object-scale-down object-center", imageClassName)}
         />
       )}
     </div>
