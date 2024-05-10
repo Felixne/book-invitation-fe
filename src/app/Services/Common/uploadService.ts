@@ -9,7 +9,6 @@ const uploadImage = async (image: File | ImageDataType, type: ImageUploadTypeEnu
 
     formData.append("image", image);
     formData.append("type", type);
-
     const response = await axiosInstance.post(COMMON_API_PATH.UPLOAD_IMAGE, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });

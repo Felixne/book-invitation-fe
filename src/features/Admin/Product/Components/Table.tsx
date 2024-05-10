@@ -9,6 +9,7 @@ import TableImageColumn from "@components/Table/TableImageColumn";
 import { TableImageColumnTypeEnum } from "@enums/commonEnum";
 import { TableProps } from "@components/Table";
 import { BaseListQueryType, ResponseDataType } from "@interfaces/Common";
+import TableContentColumnsListImage from "@components/Table/TableContentColumnsListImage";
 
 import AdminProductTableRowAction, { AdminProductTableRowActionProps } from "./TableRowAction";
 
@@ -44,12 +45,20 @@ const AdminProductTable = ({
         header: t("img"),
         cell: (cell) => (
           <TableImageColumn
-            className="w-28 h-40 rounded-md"
+            className="h-20 w-20 rounded-md"
             src={cell.row.original.image}
             alt={cell.row.original.name}
             type={TableImageColumnTypeEnum.BOX}
           />
         ),
+        meta: {
+          skeleton: <TableImageColumn skeleton type={TableImageColumnTypeEnum.BOX} />,
+        },
+      }),
+      columnHelper.display({
+        id: "detail_images",
+        header: t("detailImages"),
+        cell: (cell) => <TableContentColumnsListImage images={cell.row.original.detail_images} />,
         meta: {
           skeleton: <TableImageColumn skeleton type={TableImageColumnTypeEnum.BOX} />,
         },

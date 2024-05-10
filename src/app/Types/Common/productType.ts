@@ -8,6 +8,7 @@ export interface ProductDataType extends BaseDataType {
   description: string;
   category_uuid: number;
   category: CategoryDataType;
+  detail_images?: string[];
 }
 
 export interface ProductFormDataType extends Nullable<Partial<ProductDataType>> {}
