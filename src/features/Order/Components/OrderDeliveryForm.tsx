@@ -51,7 +51,7 @@ const OrderDeliveryForm = () => {
     setSelectedBillingAddressId(null);
   }, []);
   return (
-    <div className="xs:col-span-5 xs:text-sm md:text-base lg:col-span-2 h-fit xs:p-2 md:p-6  xs:border-none xs:border-0 md:border-2 md:border-gray-100 rounded-xl flex flex-wrap xs:gap-2 md:gap-6">
+    <div className="xs:col-span-5 xs:text-sm md:text-base lg:col-span-2 h-fit xs:p-2 md:p-6   xs:border-0 md:border-2 border-gray-100 rounded-xl flex flex-wrap xs:gap-2 md:gap-6">
       <div className="w-fit xs:text-lg md:text-xl h-fit mb-2 font-semibold relative before:w-full before:h-0.5 before:absolute before:bg-gray-50 before:rounded-full before:-bottom-1 before:left-0">
         {t("delivery")}
       </div>

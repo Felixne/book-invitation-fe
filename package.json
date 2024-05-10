@@ -97,7 +97,7 @@
     "typescript": "^5.3.2",
     "webpack": "5.85.0"
   },
-  "name": "react-ts-template",
+  "name": "demariage",
   "private": true,
   "scripts": {
     "build": "craco build",

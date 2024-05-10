@@ -97,7 +97,6 @@ const UncontrolledUploadInput = ({
       if (filesInput === null) {
         return;
       }
-
       (Array.from(filesInput) as ImageDataType[]).forEach((imageFile) => {
         setReviewedImages((prev) => [...prev, getImageURLFromFile(imageFile)]);
         handleChangeInput(imageFile);

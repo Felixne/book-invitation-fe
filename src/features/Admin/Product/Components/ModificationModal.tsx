@@ -27,6 +27,7 @@ const DEFAULT_VALUE: ProductFormDataType = {
   price: "",
   description: "",
   image: "",
+  detail_images: [],
 };
 
 const AdminProductModificationModal = ({
@@ -188,6 +189,15 @@ const AdminProductModificationModal = ({
         disabled={isSubmitting}
         multiple={false}
         label={t("image")}
+        placeholder={t("chooseImage")}
+      />
+      <UploadInput
+        containerClassName="w-full"
+        name="detail_images"
+        control={control}
+        disabled={isSubmitting}
+        multiple
+        label={t("detailImages")}
         placeholder={t("chooseImage")}
       />
     </Modal>
