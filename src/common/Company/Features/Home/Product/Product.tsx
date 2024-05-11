@@ -85,13 +85,15 @@ const Product = ({ queryParams, setQueryParams }: ProductProps) => {
           </div>
         )}
       </div>
-      <div className="w-full py-8 flex justify-center items-center">
-        <div className="xs:w-40 md:w-48 h-10">
-          <Button isLoading={isLoading} onClick={handleSetParams} color="primary" className="w-full h-full">
-            {t("loadMore")}
-          </Button>
+      {productData.length > 0 && (
+        <div className="w-full py-8 flex justify-center items-center">
+          <div className="xs:w-40 md:w-48 h-10">
+            <Button isLoading={isLoading} onClick={handleSetParams} color="primary" className="w-full h-full">
+              {t("loadMore")}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
