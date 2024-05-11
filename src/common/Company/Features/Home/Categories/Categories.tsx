@@ -6,11 +6,12 @@ import "swiper/css/pagination";
 
 import { LoadingSkeleton } from "@components/Loading";
 import useSelector from "@hooks/useSelector";
+import { CategoryDataType } from "@interfaces/Common/categoryType";
 
 import CategoryItem from "./CategoryItem";
 
 interface CategoriesProps {
-  onChangeFilter: (category: string) => void;
+  onChangeFilter: (category: CategoryDataType) => void;
 }
 
 const Categories = ({ onChangeFilter }: CategoriesProps) => {
@@ -49,11 +50,13 @@ const Categories = ({ onChangeFilter }: CategoriesProps) => {
                 className=" xs:w-fit bg-white w-full rounded-lg"
               />
             ))
-          : [{ uuid: 999, name: "All", description: "all" }, ...categories].map((item) => (
-              <SwiperSlide key={item.uuid}>
-                <CategoryItem key={item.uuid} name={item.name} onChangeFilter={onChangeFilter} />
-              </SwiperSlide>
-            ))}
+          : [{ uuid: 999, name: "All", description: "all" } as CategoryDataType, ...categories].map(
+              (item) => (
+                <SwiperSlide key={item.uuid}>
+                  <CategoryItem key={item.uuid} category={item} onChangeFilter={onChangeFilter} />
+                </SwiperSlide>
+              ),
+            )}
       </Swiper>
     </div>
   );
