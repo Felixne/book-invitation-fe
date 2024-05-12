@@ -1,8 +1,9 @@
-import { isEmpty } from "lodash";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import { useTranslation } from "react-i18next";
+import { isEmpty } from "lodash";
 
 import { LoadingSkeleton } from "@components/Loading";
 import useSelector from "@hooks/useSelector";
@@ -15,6 +16,7 @@ interface CategoriesProps {
 }
 
 const Categories = ({ onChangeFilter }: CategoriesProps) => {
+  const { t } = useTranslation();
   const categories = useSelector((state) => state.common.categories);
 
   return (
@@ -50,7 +52,7 @@ const Categories = ({ onChangeFilter }: CategoriesProps) => {
                 className=" xs:w-fit bg-white w-full rounded-lg"
               />
             ))
-          : [{ uuid: 999, name: "All", description: "all" } as CategoryDataType, ...categories].map(
+          : [{ uuid: 999, name: t("all"), description: "all" } as CategoryDataType, ...categories].map(
               (item) => (
                 <SwiperSlide key={item.uuid}>
                   <CategoryItem key={item.uuid} category={item} onChangeFilter={onChangeFilter} />

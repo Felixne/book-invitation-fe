@@ -201,5 +201,9 @@
   "warning": "Cảnh báo",
   "weddingDate": "Ngày cưới",
   "yesterday": "Hôm qua",
-  "detailImages":"Hình ảnh chi tiết"
+  "detailImages":"Hình ảnh chi tiết",
+  "wellcomeToApp":"Chào mừng đến với {{appName}}",
+  "all":"Tất cả",
+  "on":"Bật",
+  "off":"Tắt"
 }

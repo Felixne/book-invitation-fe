@@ -201,5 +201,9 @@
   "warning": "Warning",
   "weddingDate": "Wedding Date",
   "yesterday": "Yesterday",
-  "detailImages":"Detail Images"
+  "detailImages":"Detail Images",
+  "wellcomeToApp":"Wellcome to {{appName}}",
+  "all":"All",
+  "on":"On",
+  "off":"Off"
 }

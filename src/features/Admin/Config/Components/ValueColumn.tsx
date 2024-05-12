@@ -1,10 +1,11 @@
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
 import { ConfigDataType } from "@interfaces/Common";
 import { ConfigDataTypeEnum } from "@enums/configEnum";
 import TableImageColumn from "@components/Table/TableImageColumn";
 import { TableImageColumnTypeEnum } from "@enums/commonEnum";
-import { Toggle } from "@components/Form";
 import TableContentColumnsListImage from "@components/Table/TableContentColumnsListImage";
 
 interface ValueColumnProps {
@@ -12,6 +13,7 @@ interface ValueColumnProps {
 }
 
 const ValueColumn = ({ config }: ValueColumnProps) => {
+  const { t } = useTranslation();
   if (config?.datatype === ConfigDataTypeEnum.NUMBER) {
     return <div className="text-blue-500">{config.value}</div>;
   }
@@ -19,7 +21,11 @@ const ValueColumn = ({ config }: ValueColumnProps) => {
     return <TableImageColumn type={TableImageColumnTypeEnum.BOX} src={config.value} />;
   }
   if (config?.datatype === ConfigDataTypeEnum.BOOLEAN) {
-    return <Toggle isOn={Boolean(config.value)} />;
+    return (
+      <div className={twMerge(config.value ? "text-blue-700" : "text-red-700")}>
+        {config.value ? t("on") : t("off")}
+      </div>
+    );
   }
 
   if (config?.datatype === ConfigDataTypeEnum.IMAGES) {
