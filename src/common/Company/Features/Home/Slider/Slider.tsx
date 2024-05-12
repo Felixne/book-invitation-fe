@@ -11,7 +11,7 @@ import { LoadingSkeleton } from "@components/Loading";
 const Slider = () => {
   const sliderConfigValue = useSelector(commonSelector.homeSliderSelector);
   return (
-    <div className="w-full xs:h-60 md:h-120">
+    <div className="w-full xs:h-60 md:h-96">
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -23,12 +23,12 @@ const Slider = () => {
         modules={[Autoplay, Pagination]}
       >
         {isEmpty(sliderConfigValue) ? (
-          <LoadingSkeleton className="w-full xs:h-60 md:h-120" />
+          <LoadingSkeleton className="w-full xs:h-60 md:h-96" />
         ) : (
           sliderConfigValue?.map((item, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <SwiperSlide key={index}>
-              <img className="w-full xs:h-60 md:h-120 object-cover" alt="de-mairiage" src={item} />
+              <img className="w-full xs:h-60 md:h-96  object-scale-down" alt="de-mairiage" src={item} />
             </SwiperSlide>
           ))
         )}
