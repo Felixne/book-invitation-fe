@@ -3,6 +3,7 @@ import { ReactNode, memo, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { Logo } from "@components/Logo";
+import { HOME_PATH } from "@constants/routeConstant";
 
 import { useSelector } from "../../../Hooks";
 import HeaderUserDropdown from "./HeaderUserDropdown";
@@ -24,7 +25,7 @@ const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
       <div className="flex h-full w-full justify-between xs:px-4 md:px-8">
         <div className="flex items-center justify-start">
           {prefix}
-          <Link to="/" className="flex h-full flex-shrink-0 items-center">
+          <Link to={HOME_PATH.HOME} className="flex h-full flex-shrink-0 items-center">
             <Logo imageClassName="h-full" className="h-10" />
           </Link>
           <LayoutHeaderNavbar />
