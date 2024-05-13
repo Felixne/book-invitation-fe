@@ -6,7 +6,6 @@ import { CategoryDataType } from "@interfaces/Common/categoryType";
 import Categories from "./Categories/Categories";
 import Product from "./Product/Product";
 import Slider from "./Slider/Slider";
-import PopUp from "./Popup/PopUp";
 
 const HomePage = () => {
   const [queryParams, setQueryParams] = useState<BaseListQueryType | null>(null);
@@ -29,14 +28,11 @@ const HomePage = () => {
     }));
   }, []);
   return (
-    <>
-      <div className="w-full h-fit">
-        <Slider />
-        <Categories onChangeFilter={handleFilter} />
-        <Product queryParams={queryParams} setQueryParams={setQueryParams} />
-      </div>
-      <PopUp />
-    </>
+    <div className="w-full h-fit">
+      <Slider />
+      <Categories onChangeFilter={handleFilter} />
+      <Product queryParams={queryParams} setQueryParams={setQueryParams} />
+    </div>
   );
 };
 export default HomePage;

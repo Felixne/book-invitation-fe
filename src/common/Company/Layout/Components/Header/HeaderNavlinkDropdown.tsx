@@ -21,7 +21,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
       {type === DropdownTypeEnum.ABSOLUTE && (
         <div className="group-one">
           <Link className="cursor-pointer duration-75 hover:text-primary-700" to={HOME_PATH.PRODUCT}>
-            {t("product")}
+            {t("category")}
           </Link>
           <div
             className={twMerge(
@@ -65,7 +65,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
       )}
       {type === DropdownTypeEnum.BLOCK && (
         <div className="group">
-          <div className="cursor-pointer duration-75 hover:text-primary-700">{t("product")}</div>
+          <div className="cursor-pointer duration-75 hover:text-primary-700">{t("category")}</div>
           <div className={twMerge("w-full mt-1")}>
             <div className="py-1 w-full h-fit">
               {categories.map((item) => (

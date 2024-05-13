@@ -18,6 +18,7 @@ export enum ConfigKeyEnum {
   PAGINATION_PAGE_SIZE = "pagenation_page_size",
   TAX_CODE = "tax_code",
   GG_EMBED_URL = "gg_embed_url",
+  ADDRESS = "address",
 }
 
 export enum ConfigStatusEnum {
