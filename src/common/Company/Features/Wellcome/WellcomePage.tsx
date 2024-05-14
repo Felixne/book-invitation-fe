@@ -2,7 +2,7 @@ import "animate.css";
 
 import { memo } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,15 @@ const WellcomePage = () => {
         <div className="xs:w-full md:w-160 md:px-0 xs:px-4">
           <div className="w-full h-fit">
             <div className="h-fit w-full text-center xs:text-xl md:text-4xl font-semibold">
-              {t("wellcomeToApp", { appName: config[ConfigKeyEnum.APP_NAME] })}
+              <Trans
+                t={t}
+                i18nKey="wellcomeToApp"
+                values={{ appName: config[ConfigKeyEnum.APP_NAME] }}
+                components={{
+                  bold: <strong className="text-[#28166F]" />,
+                  italic: <i />,
+                }}
+              />
             </div>
             <div className="py-6 grid grid-cols-2 md:gap-3 xs:gap-6">
               <div className="xs:col-span-2 md:col-span-1 flex justify-center items-center">
@@ -52,6 +60,9 @@ const WellcomePage = () => {
             <div className="w-full h-fit text-center pt-2">{config[ConfigKeyEnum.ADDRESS] as string}</div>
             <div className="w-full h-fit text-center">
               {t("emailContact", { emailContact: config[ConfigKeyEnum.EMAIL] as string })}
+            </div>
+            <div className="w-full h-fit text-center">
+              {t("phoneNumber", { phoneNumber: config[ConfigKeyEnum.PHONE_NUMBER] as string })}
             </div>
           </div>
         </div>

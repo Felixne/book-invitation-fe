@@ -202,7 +202,7 @@
   "weddingDate": "Ngày cưới",
   "yesterday": "Hôm qua",
   "detailImages":"Hình ảnh chi tiết",
-  "wellcomeToApp":"Chào mừng đến với {{appName}}",
+  "wellcomeToApp":"<i>Chào mừng đến với</i> <bold>{{appName}}</bold>",
   "all":"Tất cả",
   "on":"Bật",
   "off":"Tắt"
