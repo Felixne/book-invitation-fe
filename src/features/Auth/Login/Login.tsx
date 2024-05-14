@@ -46,7 +46,7 @@ const Login = () => {
     try {
       const userData = await authService.loginWithEmailAndPassword(formData);
       setAuthToken({ token: userData.token });
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       if (!isEmpty(error)) {
         setGeneralError(error as AuthFormGeneralError);
