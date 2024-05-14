@@ -19,6 +19,7 @@ export enum ConfigKeyEnum {
   TAX_CODE = "tax_code",
   GG_EMBED_URL = "gg_embed_url",
   ADDRESS = "address",
+  WELLCOME_PAGE_BG_IMAGE = "wellcome_page_backgroud_image",
 }
 
 export enum ConfigStatusEnum {
