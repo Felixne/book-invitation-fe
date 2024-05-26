@@ -48,7 +48,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
                       {item?.children_category?.map((child) => (
                         <Link
                           key={child.uuid}
-                          to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${item.uuid}`}
+                          to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${child.uuid}`}
                         >
                           <div className="block px-4  py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                             {child.name}
@@ -77,7 +77,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
                     {item?.children_category?.map((child) => (
                       <Link
                         key={child.uuid}
-                        to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${item.uuid}`}
+                        to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${child.uuid}`}
                       >
                         <div className="block px-4 text-gray-500 py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                           {child.name}
