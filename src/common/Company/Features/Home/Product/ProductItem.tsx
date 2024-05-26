@@ -9,7 +9,7 @@ interface ProductItemProps {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <Link to={`${PRODUCT_PATH.PRODUCT}/${product.uuid}`}>
+    <Link className="rounded-xl" to={`${PRODUCT_PATH.PRODUCT}/${product.uuid}`}>
       <div className="col-span-1 group rounded-xl border border-gray-100 hover:scale-105 hover:shadow-sm">
         <div className="w-full h-60 rounded-t-xl">
           <img className="w-full h-full object-fill rounded-t-xl" alt={product.name} src={product.image} />
