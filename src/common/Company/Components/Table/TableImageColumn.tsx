@@ -22,7 +22,7 @@ const TableImageColumn = ({ alt, skeleton = false, src, type, className }: Table
         <Avatar src={src || ""} alt={alt} className="w-full h-full" />
       )}
       {!skeleton && type === TableImageColumnTypeEnum.BOX && (
-        <img src={src || ""} alt={alt} className="w-full h-full rounded-md" />
+        <img src={src || ""} alt={alt} className="w-fit h-fit rounded-md" />
       )}
     </div>
   );
