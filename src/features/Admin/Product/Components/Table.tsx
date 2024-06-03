@@ -79,7 +79,7 @@ const AdminProductTable = ({
         id: "description",
         header: t("description"),
       }),
-      columnHelper.accessor((row) => row.category.name, {
+      columnHelper.accessor((row) => row?.category?.name || "_", {
         id: "category.name",
         header: t("category"),
       }),

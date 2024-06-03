@@ -34,7 +34,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
                   <Link
                     className="group-two relative"
                     key={item.uuid}
-                    to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${item.uuid}`}
+                    to={`${HOME_PATH.PRODUCT}?filter=filter.category_include_children=${item.uuid}`}
                   >
                     <div className="block z-10 px-4 py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                       {item.name}
@@ -48,7 +48,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
                       {item?.children_category?.map((child) => (
                         <Link
                           key={child.uuid}
-                          to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${child.uuid}`}
+                          to={`${HOME_PATH.PRODUCT}?filter=filter.category_include_children=${child.uuid}`}
                         >
                           <div className="block px-4  py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                             {child.name}
@@ -69,7 +69,10 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
           <div className={twMerge("w-full mt-1")}>
             <div className="py-1 w-full h-fit">
               {categories.map((item) => (
-                <Link key={item.uuid} to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${item.uuid}`}>
+                <Link
+                  key={item.uuid}
+                  to={`${HOME_PATH.PRODUCT}?filter=filter.category_include_children=${item.uuid}`}
+                >
                   <div className="block h-fit underline text-gray-700 px-4 py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                     {item.name}
                   </div>
@@ -77,7 +80,7 @@ const HeaderNavlinkDropdown = ({ className, type }: HeaderNavlinkDropdownProps) 
                     {item?.children_category?.map((child) => (
                       <Link
                         key={child.uuid}
-                        to={`${HOME_PATH.PRODUCT}?filter=filter.category_uuid=${child.uuid}`}
+                        to={`${HOME_PATH.PRODUCT}?filter=filter.category_include_children=${child.uuid}`}
                       >
                         <div className="block px-4 text-gray-500 py-2 text-sm hover:text-primary-700 hover:bg-primary-100">
                           {child.name}

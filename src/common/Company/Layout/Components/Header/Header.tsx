@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Logo } from "@components/Logo";
 import { HOME_PATH } from "@constants/routeConstant";
+import { commonSelector } from "@selectors/index";
 
 import { useSelector } from "../../../Hooks";
 import HeaderUserDropdown from "./HeaderUserDropdown";
@@ -17,6 +18,7 @@ interface LayoutHeaderProps {
 
 const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
   const user = useSelector((state) => state.common.user);
+  const statusOrder = useSelector(commonSelector.statusOrderSelector);
 
   const headerRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +37,7 @@ const LayoutHeader = ({ prefix }: LayoutHeaderProps) => {
             <HeaderLoginButton />
           ) : (
             <>
-              <HeaderCard />
+              {Boolean(statusOrder) && <HeaderCard />}
               <HeaderUserDropdown />
             </>
           )}
