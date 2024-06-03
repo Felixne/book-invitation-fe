@@ -205,5 +205,7 @@
   "wellcomeToApp":"<i>Chào mừng đến với</i> <bold>{{appName}}</bold>",
   "all":"Tất cả",
   "on":"Bật",
-  "off":"Tắt"
+  "off":"Tắt",
+  "somethingWentWrong":"Có lỗi gì đó đã xảy ra.",
+  "tryAgain":"Tải lại"
 }

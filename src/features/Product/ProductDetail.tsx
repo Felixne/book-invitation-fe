@@ -16,6 +16,7 @@ const ProductDetail = () => {
   const fetchData = useCallback(async () => {
     const productId = pathname.split("/").at(-1);
     if (isUndefined(productId)) return;
+    setIsLoading(true);
     try {
       const data = await getProductById(Number(productId));
       setProductData(data);

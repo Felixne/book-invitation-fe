@@ -39,7 +39,7 @@ const Modal = (
       {isOpen && (
         <Dialog
           as={motion.div}
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-50 py-10 h-screen overflow-y-scroll flex items-center justify-center overflow-hidden"
           open={isOpen}
           ref={ref}
           static

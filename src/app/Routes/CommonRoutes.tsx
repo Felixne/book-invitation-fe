@@ -9,6 +9,7 @@ import useDispatch from "@hooks/useDispatch";
 import useSelector from "@hooks/useSelector";
 import { getAuthToken } from "@services/Common/authService";
 import { getCaterories } from "@services/App/categoryService";
+import { commonSelector } from "@selectors/index";
 
 import { LoadingOverlay } from "../../common/Company/Components";
 import { AUTH_PATH } from "../Constants";
@@ -22,6 +23,7 @@ const CommonRoutes = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const user = useSelector((state) => state.common.user);
+  const statusOrder = useSelector(commonSelector.statusOrderSelector);
   const token = getAuthToken();
 
   const excludeRedirectPaths = useMemo(() => ["/", "error/*", "auth/*", "docs/*"], []);
@@ -99,7 +101,7 @@ const CommonRoutes = () => {
       <Route path="auth/*" element={<AuthRoutes />} />
       <Route path="error/*" element={<ErrorRoutes />} />
       <Route path="product/*" element={<ProductRoutes />} />
-      <Route path="order" element={<OrderPage />} />
+      {statusOrder && <Route path="order" element={<OrderPage />} />}
     </Routes>
   );
 };

@@ -1,4 +1,7 @@
+import "swiper/css";
 import { memo, useCallback, useState } from "react";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import { ProductDataType } from "@interfaces/Common/productType";
 import { LoadingSkeleton } from "@components/Loading";
@@ -38,23 +41,39 @@ const ProductDetailImage = ({ productData, isLoading }: ProductDetailImageProps)
           )}
         </div>
         <div className="w-full h-fit flex items-center justify-center">
-          <div className="py-6 h-fit w-96 justify-center grid grid-cols-3 items-center gap-6">
-            {isLoading
-              ? Array.from({ length: 3 }).map((_1, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <LoadingSkeleton key={index} className="col-span-1 h-28 rounded-xl" />
-                ))
-              : productData?.detail_images?.map((item, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <div key={index} className="col-span-1 h-full">
-                    <ProductImage
-                      className="w-full h-28"
-                      alt={item}
-                      src={item}
-                      onClickImage={handleClickImg}
-                    />
-                  </div>
-                ))}
+          <div className="w-96 h-fit py-6">
+            <Swiper
+              spaceBetween={4}
+              slidesPerView={3}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay]}
+            >
+              {isLoading && productData?.detail_images?.length === 0 && (
+                <div className="w-full flex grid-cols-3 gap-6">
+                  {Array.from({ length: 3 }).map((_1, index) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <LoadingSkeleton key={index} className="col-span-1 h-28 rounded-xl" />
+                  ))}
+                </div>
+              )}
+              {productData?.detail_images?.map((item, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <SwiperSlide key={index}>
+                  <ProductImage
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    className="w-28 h-28"
+                    alt={item}
+                    src={item}
+                    onClickImage={handleClickImg}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </div>

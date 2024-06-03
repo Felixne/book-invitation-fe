@@ -205,5 +205,7 @@
   "wellcomeToApp":"Wellcome to {{appName}}",
   "all":"All",
   "on":"On",
-  "off":"Off"
+  "off":"Off",
+  "somethingWentWrong":"Some thing went wrong",
+  "tryAgain":"Try again"
 }

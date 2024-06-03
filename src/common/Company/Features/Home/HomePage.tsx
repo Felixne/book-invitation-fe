@@ -21,7 +21,7 @@ const HomePage = () => {
       ...prev,
       filterParams: [
         {
-          filterBy: "filter.category_uuid",
+          filterBy: "filter.category_include_children",
           values: [caterory.uuid],
         },
       ],
